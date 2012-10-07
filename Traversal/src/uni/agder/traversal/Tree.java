@@ -5,6 +5,6 @@ import java.util.List;
 
 public class Tree {
 	
-	private List <Node> listOfNodes = new ArrayList <Node>();
-	private List <Human> listOfHumans = new ArrayList <Human>();
+	private Node rootNode = new Node();
+	private List<Human> listOfHumans = new ArrayList<Human>();
 }
