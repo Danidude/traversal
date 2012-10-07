@@ -6,7 +6,7 @@ import java.util.List;
 public class Node {
 	
 	private float chanceOfDeath;
-	private List <Branch> listOfBranches = new ArrayList <Branch>();
+	private List <Node> listOfChildren = new ArrayList <Node>();
 	
 	public float getChanceOfDeath() {
 		return chanceOfDeath;
