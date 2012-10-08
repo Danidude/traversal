@@ -1,8 +1,9 @@
 package uni.agder.traversal;
 
 
-enum Age { Adult, Teenager, Child, Elderly }
-enum Gender { Male, Female }
+enum Age { ADULT, TEENAGER, CHILD, ELDERLY }
+enum Gender { MALE, FEMALE }
+
 public class Human {
 	
 	private Age age;
