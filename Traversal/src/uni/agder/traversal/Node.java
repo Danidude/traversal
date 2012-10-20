@@ -15,7 +15,13 @@ public class Node {
 	private int capacity;
 	private NodeType nodeType;
 	private List<Node> listOfPaths;
-
+	public int NodeID;
+	
+	public Node(int ID){
+		this.NodeID = ID;
+		this.nodeType = randomEnum.random();
+	}
+	
 	public int getCapacity() {
 		return capacity;
 	}
@@ -40,17 +46,26 @@ public class Node {
 	public void setPath(List<Node> listOfChildren){
 		this.listOfPaths = listOfChildren;
 	}
-	// Untested
+	// Fixed and tested.
 	public void addPath(Node node){
-		if(this.listOfPaths==null){ new ArrayList<Node> (); }
-		if(node.listOfPaths==null){ new ArrayList<Node> (); }
-		this.listOfPaths.add(node);
-		node.listOfPaths.add(this);		
+		if(this.listOfPaths==null){listOfPaths = new ArrayList<Node> (); }
+		boolean isInList = false;
+		for (Node n : listOfPaths)
+		{
+			if (n.NodeID == node.NodeID)
+			{
+				isInList=true;
+			}
+		}
+		if (isInList == false && node.NodeID != this.NodeID)
+		{
+			this.listOfPaths.add(node);
+			node.addPath(this);
+		}
+		
+		
+		
 	}	
-
-	public Node(){
-		this.nodeType = randomEnum.random();
-	}
 
 	private static class RandomEnum<E extends Enum<NodeType>> {
 		private static final Random randomGenerator = new Random();
@@ -63,5 +78,18 @@ public class Node {
 		public E random() {
 			return values[randomGenerator.nextInt(values.length)];
 		}
+	}
+	
+	public void printPath()
+	{
+		System.out.print("Node "+NodeID+" that is a "+nodeType+" have access to ");
+		if(listOfPaths.size() != 0)
+		{
+		for (Node n : listOfPaths)
+		{
+			System.out.print(n.NodeID+" ");
+		}
+		}
+		System.out.println(" ");
 	}
 }
