@@ -1,6 +1,6 @@
 package uni.agder.traversal;
 
-public class run {
+public class Run {
 	static Graph graph;
 	public static void main(String [ ] args)
 	{

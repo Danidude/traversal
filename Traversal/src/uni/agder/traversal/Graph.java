@@ -32,7 +32,7 @@ public class Graph {
 	//Just to create a test list
 	private void firstTestList()
 	{
-		for(int i = 0; i < 7; i++)
+		for(int i = 0; i < 8; i++)
 		{
 			listOfNodes.add(createNode());
 		}
@@ -47,9 +47,11 @@ public class Graph {
 		
 		listOfNodes.get(5).addPath(listOfNodes.get(4));
 		listOfNodes.get(5).addPath(listOfNodes.get(6));
+		listOfNodes.get(5).addPath(listOfNodes.get(7));
+		
 		
 		listOfNodes.get(3).setChanceOfDeath(1);
-		listOfNodes.get(5).setChanceOfDeath(1);
+		listOfNodes.get(4).setChanceOfDeath(1);
 		
 		//System.out.println(listOfNodes.size());
 		
