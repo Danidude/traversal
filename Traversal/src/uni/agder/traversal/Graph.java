@@ -62,6 +62,11 @@ public class Graph {
 		}
 		
 	}
+	
+	public List getNodes()
+	{
+		return listOfNodes;
+	}
 
 }
 
