@@ -5,19 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bruteforce {
-	private ArrayList<ArrayList<Integer>> listOfSolutions = new ArrayList<ArrayList<Integer>>();
-	private ArrayList<ArrayList<Integer>> tempListOfSolutions;
+	private ArrayList<ArrayList<Integer>> listOfSolutions = new ArrayList<ArrayList<Integer>>(); //Contains the current solutions.
+	private ArrayList<ArrayList<Integer>> tempListOfSolutions; //Hold on the next solutions until it is trasnferd over to the solution list.
 	private ArrayList<Integer> solution;
 	private List<Node> listOfNodes = new ArrayList<Node>();
 	private Node startNode;
 	private boolean isFinished;
 	
+	//Main function.
 	public ArrayList<ArrayList<Integer>> bruteForceGraph(Graph graph)
 	{
 		
 		listOfNodes = graph.getNodes();
 		
-		startNode = findStartNode(listOfNodes);
+		startNode = findStartNode(listOfNodes, graph.getHumans());
 		if(startNode == null)
 			return null;
 		solution = new ArrayList<Integer>();
@@ -42,79 +43,93 @@ public class Bruteforce {
 		
 		
 	}
-	
-	private Node findStartNode(List<Node> list)
+	//Finds the node we start from to create solutions.
+	private Node findStartNode(List<Node> nlist, List<Human> hlist)
 	{
 		
-		for (Node n : list)
+		for (Node n : nlist)
 		{
-			if(n.NodeID == 1)
+			if(n.NodeID == hlist.get(0).getAtNode())
 				return n;
 		}
 		
 		return null;
 	}
-	
+	//This goes trough all the solutions and does one step for each of them.(That may spawn many more solutions, as shown in the function under)
 	private void bruteForceStep(ArrayList<ArrayList<Integer>> listOfLists)
 	{
 		for(ArrayList<Integer> l : listOfLists)
 		{
-			if(l.get(l.size()-1) != -1 && l.get(l.size()-1) != 0)
-				nextStep(l);
-			else if(l.get(l.size()-1) == 0)
+			if(l.get(l.size()-1) != -1 && l.get(l.size()-1) != 0)//Only want to do a step of unfinished solutions.
+				nextStepInSolution(l);
+			else if(l.get(l.size()-1) == 0)//If it is a solution that is solved, it adds it so tempList, so it is kept.
 				tempListOfSolutions.add(l);
 		}
 	}
 	
-	private void nextStep(ArrayList<Integer> solution)
+	//This checks all the paths in the currentNode and creates one solution for each one of them, and then adds them to the tempSolutionsList.
+	
+	private void nextStepInSolution(ArrayList<Integer> solution)
 	{
-		Node currentNode = null;
-		for(Node n : listOfNodes)
-		{
-			if(n.NodeID == solution.get(solution.size()-1))
-			{
-				currentNode = n;
-			}
-		}
+		//First find the currentNode for this specific solution.
+		Node currentNode = findCurrentNode(solution);
+		
+		//If it bugs out, just exit;
 		if (currentNode == null)
 			return;
 		
 		boolean exsistBefore = false; //Is used to check if the selected route is already in the list.
-		//boolean lastToChange = true; //No need to create a new list for the last of the paths, just use the current one.
-		int listCounter = 0;
+		
 		for(Node n : currentNode.getPath())
 		{
-			listCounter++;
-			exsistBefore = false;
-			for(int i : solution)
+			exsistBefore = checkIfSolutionLoops(n, solution);
+			
+			if(!exsistBefore)
 			{
-				if(n.NodeID == i)
-				{
-					exsistBefore = true;
-				}
+				createCloneSolution(solution, n.NodeID);
 			}
-			ArrayList<Integer> newSolution = createCloneSolution(solution);
-			if(exsistBefore == true)
-			{
-				newSolution.add(-1);
-			}
-			else
-			{
-				newSolution.add(n.NodeID);
-			}
-			tempListOfSolutions.add(newSolution);
+			
 		}
 		
 		
 	}
 	
-	private ArrayList<Integer> createCloneSolution(ArrayList<Integer> list)
+	//Finds the node that is at the end of the solution and returns it.
+	private Node findCurrentNode(ArrayList<Integer> solution)
+	{
+		for(Node n : listOfNodes)
+		{
+			if(n.NodeID == solution.get(solution.size()-1))
+			{
+				return n;
+			}
+		}
+		return null;
+	}
+	
+	//Checks if the node is already in the list, if it is, it return true, else it return false.
+	private boolean checkIfSolutionLoops(Node n, ArrayList<Integer> l)
+	{
+		for(int i : l)
+			{
+				if(n.NodeID == i)
+				{
+					return true;
+				}
+			}
+		return false;
+	}
+	
+	//Clones a solution, and then adds it to the tempList.
+	private void createCloneSolution(ArrayList<Integer> list, int nextNode)
 	{
 		ArrayList<Integer> newClone = new ArrayList<Integer>();
 		newClone.addAll(list);
-		return newClone;
+		newClone.add(nextNode);
+		tempListOfSolutions.add(newClone);
 	}
 	
+	//Test to see if all the solutions are legal solutions(I.e that they reached a end-point).
 	private boolean isDone(ArrayList<ArrayList<Integer>> list)
 	{
 		for(ArrayList<Integer> l : list)
@@ -128,6 +143,8 @@ public class Bruteforce {
 		return true;
 	}
 	
+	//Checks if the solution have reached node 8, witch is the end node in our test scenario.
+	//Needs to be changed to be more dynamic.
 	private void isAtEnd(ArrayList<ArrayList<Integer>> list)
 	{
 		for(ArrayList<Integer> l : list)
@@ -138,7 +155,7 @@ public class Bruteforce {
 			}
 		}
 	}
-	
+	//First it goes trough all the solutions to find the one with the shortest path, then puts all with that length into a list it returns.
 	private ArrayList<ArrayList<Integer>> findBestSolutions(ArrayList<ArrayList<Integer>> list)
 	{
 		ArrayList<ArrayList<Integer>> theBest = new ArrayList<ArrayList<Integer>>();
@@ -161,6 +178,7 @@ public class Bruteforce {
 		return theBest;
 	}
 	
+	//Prints out the solution in a nice fashion.
 	public void printSolutions (ArrayList<ArrayList<Integer>> list)
 	{
 		int number = 1;

@@ -61,11 +61,21 @@ public class Graph {
 			//System.out.println(listOfNodes.size());
 		}
 		
+		Human human1 = new Human(Age.ADULT, Gender.MALE);
+		human1.setAtNode(1);
+		listOfHumans.add(human1);
+		
+		
 	}
 	
 	public List getNodes()
 	{
 		return listOfNodes;
+	}
+	
+	public List getHumans()
+	{
+		return listOfHumans;
 	}
 
 }
