@@ -37,19 +37,18 @@ import java.util.List;
  * Step 10:	Now it finds the shortest path and returns a list with all the solutions with the shortest path.
  */
 public class Bruteforce {
-	private ArrayList<ArrayList<Integer>> listOfSolutions = new ArrayList<ArrayList<Integer>>(); //Contains the current solutions.
-	private ArrayList<ArrayList<Integer>> tempListOfSolutions; //Hold on the next solutions until it is trasnferd over to the solution list.
+	private ArrayList<ArrayList<Integer>> listOfSolutions = new ArrayList<ArrayList<Integer>>(); 
+	private ArrayList<ArrayList<Integer>> tempListOfSolutions;
 	private ArrayList<Integer> solution;
 	private List<Node> listOfNodes = new ArrayList<Node>();
 	private Node startNode;
 	private boolean isFinished;
-	
+
 	//Main function.
 	public ArrayList<ArrayList<Integer>> bruteForceGraph(Graph graph)
 	{
-		
-		listOfNodes = graph.getNodes();
-		
+
+		listOfNodes = graph.getNodes();		
 		startNode = findStartNode(listOfNodes, graph.getHumans());
 		if(startNode == null)
 			return null;
@@ -57,7 +56,7 @@ public class Bruteforce {
 		solution.add(startNode.NodeID);
 		listOfSolutions.add(solution);
 		isFinished = false;
-		
+
 		while (!isFinished)
 		{
 			tempListOfSolutions = new ArrayList<ArrayList<Integer>>();
@@ -66,28 +65,30 @@ public class Bruteforce {
 			listOfSolutions.addAll(tempListOfSolutions);
 			isFinished = isDone(listOfSolutions);
 			isAtEnd(listOfSolutions);
-			
+
 		}
-		
+
 		listOfSolutions = findBestSolutions(listOfSolutions);
 		return listOfSolutions;
-		
-		
-		
+
+
+
 	}
+
 	/*
 	 * Finds the node we want to start the bruteforce from.
 	 * Current it finds what node the human 0 stands in.
 	 * TO DO: Move this function into Graph, takes a human and returns the node that human stands in.
 	 */
-	private Node findStartNode(List<Node> nlist, List<Human> hlist)
+	private Node findStartNode(List<Node> nlist, List<Human> hList)
 	{
 		for (Node n : nlist)
+
 		{
-			if(n.NodeID == hlist.get(0).getAtNode())
+			if(n.NodeID == hList.get(0).getCurrentNode())
 				return n;
 		}
-		
+
 		return null;
 	}
 	/*
@@ -108,6 +109,7 @@ public class Bruteforce {
 				tempListOfSolutions.add(l);
 		}
 	}
+
 	
 	/*
 	 * This functions takes a list of integers(NodeID's), finds the last entery(CurrentNode) and then finds all the paths this node leades
@@ -115,6 +117,7 @@ public class Bruteforce {
 	 * solution from the old one and adds the paths nodeID to the solution. If it have been to this node before, ot dose nothing and goes
 	 * to the next path.
 	 */
+
 	private void nextStepInSolution(ArrayList<Integer> solution)
 	{
 		//First find the currentNode for this specific solution.
@@ -129,20 +132,22 @@ public class Bruteforce {
 		for(Node n : currentNode.getPath())
 		{
 			exsistBefore = checkIfSolutionLoops(n, solution);
-			
+
 			if(!exsistBefore)
 			{
 				createCloneSolution(solution, n.NodeID);
 			}
-			
+
 		}
-		
-		
+
+
 	}
+
 	
 	/*
 	 * It takes a solution list, and searches for the node with the ID same as the last Integer as the last entery in the solution.
 	 */
+
 	private Node findCurrentNode(ArrayList<Integer> solution)
 	{
 		for(Node n : listOfNodes)
@@ -158,21 +163,24 @@ public class Bruteforce {
 	/*
 	 * Checks if the node is already in the list, if it is, it return true, else it return false.
 	 */
+
 	private boolean checkIfSolutionLoops(Node n, ArrayList<Integer> l)
 	{
 		for(int i : l)
+		{
+			if(n.NodeID == i)
 			{
-				if(n.NodeID == i)
-				{
-					return true;
-				}
+				return true;
 			}
+		}
 		return false;
 	}
+
 	
 	/*
 	 * Clones a solution, then adds the given intiger to the list as the last entry. Then it saves it to tempListOfSolutions.
 	 */
+
 	private void createCloneSolution(ArrayList<Integer> list, int nextNode)
 	{
 		ArrayList<Integer> newClone = new ArrayList<Integer>();
@@ -180,12 +188,14 @@ public class Bruteforce {
 		newClone.add(nextNode);
 		tempListOfSolutions.add(newClone);
 	}
+
 	
 	/*
 	 * Test to see if all the solutions are legal solutions. A legal or vial solution is a solution that ends with a 0.
 	 * returns false if there is one or more solutions that do not have 0 as their last entry.
 	 * else it return true.
 	 */
+
 	private boolean isDone(ArrayList<ArrayList<Integer>> list)
 	{
 		for(ArrayList<Integer> l : list)
@@ -195,15 +205,17 @@ public class Bruteforce {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
+
 	
 	/*
 	 * Checks if the solution have reached node 8, witch is the end node in our test scenario.
 	 * TO DO: Needs to change so that more nodes may be end-points, and not only node with ID = 8.
 	 * Maybe create a bool in the nodes that is true if it is a legal end-point.
 	 */
+
 	private void isAtEnd(ArrayList<ArrayList<Integer>> list)
 	{
 		for(ArrayList<Integer> l : list)
@@ -237,13 +249,15 @@ public class Bruteforce {
 				theBest.add(l);
 			}
 		}
-		
+
 		return theBest;
 	}
+
 	
 	/*
 	 * Takes a list with list of integers, then proceeds to print them out all the integers, list by list.
 	 */
+
 	public void printSolutions (ArrayList<ArrayList<Integer>> list)
 	{
 		int number = 1;
@@ -257,6 +271,6 @@ public class Bruteforce {
 			}
 			System.out.println(".");
 		}
-		
+
 	}
 }

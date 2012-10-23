@@ -2,7 +2,6 @@ package uni.agder.traversal;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Graph {
 
@@ -62,18 +61,18 @@ public class Graph {
 		}
 		
 		Human human1 = new Human(Age.ADULT, Gender.MALE);
-		human1.setAtNode(1);
+		human1.setCurrentNode(1);
 		listOfHumans.add(human1);
 		
 		
 	}
 	
-	public List getNodes()
+	public List<Node> getNodes()
 	{
 		return listOfNodes;
 	}
 	
-	public List getHumans()
+	public List<Human> getHumans()
 	{
 		return listOfHumans;
 	}

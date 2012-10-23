@@ -8,20 +8,20 @@ public class Human {
 	
 	private Age age;
 	private Gender gender;
-	private int atNode;
+	private int currentNode;
 	
 	public Human(Age age, Gender gender) {
 		this.age = age;
 		this.gender = gender;
 	}
 	
-	public void setAtNode(int i)
+	public void setCurrentNode(int i)
 	{
-		atNode = i;
+		currentNode = i;
 	}
 	
-	public int getAtNode()
+	public int getCurrentNode()
 	{
-		return atNode;
+		return currentNode;
 	}
 }
