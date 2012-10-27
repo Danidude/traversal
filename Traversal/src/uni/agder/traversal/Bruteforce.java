@@ -18,13 +18,13 @@ import java.util.List;
  * 
  * Step 5:	In the loop it creates a temporary list for the new solutions to be created from the not yet finished solutions.
  * 
- * Step 6:	Runs the burteforce function on the list of possible solutions. This function does this:
+ * Step 6:	Runs the bruteforce function on the list of possible solutions. This function does this:
  * 				Checks if the last entry of the list is a -1 or 0, if not it does the next step for this possible solution(Moves
  * 				the current node ahead and creates new solutions for each path it may take.)
  * 				If the list ends with a 0, it saves it to the temporarily list so it is not deleted. The ones with -1 in the end, are
  * 				discarded.
  * 
- * Step 7:	In the nextstep function, it fiends the currentnode, witch is the last integer in the list. Then it finds that node with that ID
+ * Step 7:	In the nextstep function, it finds the currentnode, witch is the last integer in the list. Then it finds that node with that ID
  * 			and creates new solutions from the paths from the node. Each new solutions have a new ID added, with is equal to the path nodeID
  * 			they where created from. (If the paths takes the possible solution to a node it have already visited, it does not create a new
  * 			solution, just jumps over this then. This is to avoid infinite loops.)
@@ -47,7 +47,6 @@ public class Bruteforce {
 	//Main function.
 	public ArrayList<ArrayList<Integer>> bruteForceGraph(Graph graph)
 	{
-
 		listOfNodes = graph.getNodes();		
 		startNode = findStartNode(listOfNodes, graph.getHumans());
 		if(startNode == null)
@@ -65,14 +64,10 @@ public class Bruteforce {
 			listOfSolutions.addAll(tempListOfSolutions);
 			isFinished = isDone(listOfSolutions);
 			isAtEnd(listOfSolutions);
-
 		}
 
 		listOfSolutions = findBestSolutions(listOfSolutions);
 		return listOfSolutions;
-
-
-
 	}
 
 	/*
@@ -112,9 +107,9 @@ public class Bruteforce {
 
 	
 	/*
-	 * This functions takes a list of integers(NodeID's), finds the last entery(CurrentNode) and then finds all the paths this node leades
-	 * too. Once this is done, it checks each paths nodeID to see if the solution have been to this node before, if not, it creats a new
-	 * solution from the old one and adds the paths nodeID to the solution. If it have been to this node before, ot dose nothing and goes
+	 * This functions takes a list of integers(NodeID's), finds the last entry(CurrentNode) and then finds all the paths this node leads
+	 * too. Once this is done, it checks each paths nodeID to see if the solution have been to this node before, if not, it creates a new
+	 * solution from the old one and adds the paths nodeID to the solution. If it have been to this node before it does nothing and goes
 	 * to the next path.
 	 */
 
@@ -178,7 +173,7 @@ public class Bruteforce {
 
 	
 	/*
-	 * Clones a solution, then adds the given intiger to the list as the last entry. Then it saves it to tempListOfSolutions.
+	 * Clones a solution, then adds the given integer to the list as the last entry. Then it saves it to tempListOfSolutions.
 	 */
 
 	private void createCloneSolution(ArrayList<Integer> list, int nextNode)
@@ -213,7 +208,7 @@ public class Bruteforce {
 	/*
 	 * Checks if the solution have reached node 8, witch is the end node in our test scenario.
 	 * TO DO: Needs to change so that more nodes may be end-points, and not only node with ID = 8.
-	 * Maybe create a bool in the nodes that is true if it is a legal end-point.
+	 * Maybe create a boolean in the nodes that is true if it is a legal end-point.
 	 */
 
 	private void isAtEnd(ArrayList<ArrayList<Integer>> list)
@@ -272,5 +267,8 @@ public class Bruteforce {
 			System.out.println(".");
 		}
 
+	}
+	public Bruteforce(){
+		
 	}
 }

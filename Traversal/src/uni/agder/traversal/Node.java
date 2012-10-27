@@ -17,6 +17,13 @@ public class Node {
 	private List<Node> listOfPaths;
 	public int NodeID;
 	
+	public int getSize(){
+		if(this.listOfPaths == null){
+			return 0;
+		}
+		else return listOfPaths.size();
+	}
+	
 	public Node(int ID){
 		this.NodeID = ID;
 		this.nodeType = randomEnum.random();
@@ -61,10 +68,7 @@ public class Node {
 		{
 			this.listOfPaths.add(node);
 			node.addPath(this);
-		}
-		
-		
-		
+		}	
 	}	
 
 	private static class RandomEnum<E extends Enum<NodeType>> {

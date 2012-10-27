@@ -2,7 +2,7 @@ package uni.agder.traversal;
 
 import java.util.ArrayList;
 
-public class Run {
+public class run {
 	static Graph graph;
 	static Bruteforce bruteForce;
 	static ArrayList<ArrayList<Integer>> solutions;

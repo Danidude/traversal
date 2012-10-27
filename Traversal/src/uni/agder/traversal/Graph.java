@@ -2,6 +2,7 @@ package uni.agder.traversal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Graph {
 
@@ -19,7 +20,12 @@ public class Graph {
 	 * Step four: Count steps for all possible solutions and print best path
 	 */
 	public void generateGraph() {
-		firstTestList();
+		//firstTestList();
+		randomGraph(8, 2);
+		for (Node n : listOfNodes)
+		{
+			n.printPath();
+		}
 	}		
 	
 	private Node createNode()
@@ -62,9 +68,23 @@ public class Graph {
 		
 		Human human1 = new Human(Age.ADULT, Gender.MALE);
 		human1.setCurrentNode(1);
+		listOfHumans.add(human1);	
+	}
+	
+	public void randomGraph(int nodes, int branches){
+		Random random = new Random();
+		for(int i = 0; i < nodes; i++){
+			listOfNodes.add(createNode());
+		}
+		for(Node n: listOfNodes){
+			int k = n.getSize();
+			for(int j = k; j < branches; j++){
+				n.addPath(listOfNodes.get(random.nextInt(listOfNodes.size())));
+			}			
+		}
+		Human human1 = new Human(Age.ADULT, Gender.MALE);
+		human1.setCurrentNode(1);
 		listOfHumans.add(human1);
-		
-		
 	}
 	
 	public List<Node> getNodes()
