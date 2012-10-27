@@ -1,27 +1,56 @@
 package uni.agder.traversal;
 
-
-enum Age { ADULT, TEENAGER, CHILD, ELDERLY }
-enum Gender { MALE, FEMALE }
+import java.util.Random;
 
 public class Human {
 	
+	private enum Age { ADULT, TEENAGER, CHILD, ELDERLY }
+	private enum Gender { MALE, FEMALE }
+	private static final RandomAgeEnum<Age> randomAgeEnum =
+			new RandomAgeEnum<Age>(Age.class);
+	private static final RandomGenderEnum<Gender> randomGenderEnum =
+			new RandomGenderEnum<Gender>(Gender.class);
 	private Age age;
 	private Gender gender;
 	private int currentNode;
 	
-	public Human(Age age, Gender gender) {
-		this.age = age;
-		this.gender = gender;
+	public Human(){
+		this.age = randomAgeEnum.random();
+		this.gender = randomGenderEnum.random();
 	}
 	
-	public void setCurrentNode(int i)
-	{
+	public void setCurrentNode(int i){
 		currentNode = i;
 	}
 	
-	public int getCurrentNode()
-	{
+	public int getCurrentNode(){
 		return currentNode;
 	}
+	
+	private static class RandomAgeEnum<E extends Enum<Age>> {
+		private static final Random randomGenerator = new Random();
+		private final E[] values;
+
+		public RandomAgeEnum(Class<E> token){
+			values = token.getEnumConstants();
+		}
+
+		public E random() {
+			return values[randomGenerator.nextInt(values.length)];
+		}
+	}
+	
+	private static class RandomGenderEnum<E extends Enum<Gender>> {
+		private static final Random randomGenerator = new Random();
+		private final E[] values;
+
+		public RandomGenderEnum(Class<E> token){
+			values = token.getEnumConstants();
+		}
+
+		public E random() {
+			return values[randomGenerator.nextInt(values.length)];
+		}
+	}
 }
+

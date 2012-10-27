@@ -19,14 +19,20 @@ public class Graph {
 	 * Step three: Find all possible paths by traversing the graph
 	 * Step four: Count steps for all possible solutions and print best path
 	 */
-	public void generateGraph() {
-		//firstTestList();
-		randomGraph(8, 2);
+	public void generateFixedGraph() {
+		firstTestList();
 		for (Node n : listOfNodes)
 		{
 			n.printPath();
 		}
-	}		
+	}
+	
+	public void generateRandomGraph(int nodes, int branches){
+		randomGraph(nodes, branches);
+		for (Node n : listOfNodes){
+			n.printPath();
+		}
+	}
 	
 	private Node createNode()
 	{
@@ -66,7 +72,7 @@ public class Graph {
 			//System.out.println(listOfNodes.size());
 		}
 		
-		Human human1 = new Human(Age.ADULT, Gender.MALE);
+		Human human1 = new Human();
 		human1.setCurrentNode(1);
 		listOfHumans.add(human1);	
 	}
@@ -81,22 +87,34 @@ public class Graph {
 			for(int j = k; j < branches; j++){
 				n.addPath(listOfNodes.get(random.nextInt(listOfNodes.size())));
 			}			
-		}
-		Human human1 = new Human(Age.ADULT, Gender.MALE);
-		human1.setCurrentNode(1);
-		listOfHumans.add(human1);
+		}		
 	}
 	
-	public List<Node> getNodes()
-	{
+	public List<Node> getNodes(){
 		return listOfNodes;
 	}
 	
-	public List<Human> getHumans()
-	{
+	public List<Human> getHumans(){
 		return listOfHumans;
 	}
-
+	
+	public void addHuman(Human human){
+		listOfHumans.add(human);
+	}
+	
+	public void generateRandomHumans(int number){
+		for(int i = 0; i < number; i++){
+			Human human = new Human();
+			listOfHumans.add(human);
+		}
+	}
+	
+	public void placeAllHumans(){
+		Random randomNode = new Random();
+		for(Human h : listOfHumans){
+			h.setCurrentNode(randomNode.nextInt(listOfNodes.size()));
+		}
+	}
 }
 
 

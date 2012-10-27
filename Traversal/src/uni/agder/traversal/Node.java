@@ -53,7 +53,7 @@ public class Node {
 	public void setPath(List<Node> listOfChildren){
 		this.listOfPaths = listOfChildren;
 	}
-	// Fixed and tested.
+
 	public void addPath(Node node){
 		if(this.listOfPaths==null){listOfPaths = new ArrayList<Node> (); }
 		boolean isInList = false;

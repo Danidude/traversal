@@ -77,13 +77,10 @@ public class Bruteforce {
 	 */
 	private Node findStartNode(List<Node> nlist, List<Human> hList)
 	{
-		for (Node n : nlist)
-
-		{
+		for (Node n : nlist){
 			if(n.NodeID == hList.get(0).getCurrentNode())
 				return n;
 		}
-
 		return null;
 	}
 	/*
@@ -92,10 +89,8 @@ public class Bruteforce {
 	 * If 0: Saves that solution to tempListOfSolutions for save keeping. (This is one of the valid solutions.)
 	 * If -1: The list is discarded.
 	 */
-	private void bruteForceStep(ArrayList<ArrayList<Integer>> listOfLists)
-	{
-		for(ArrayList<Integer> l : listOfLists)
-		{
+	private void bruteForceStep(ArrayList<ArrayList<Integer>> listOfLists){
+		for(ArrayList<Integer> l : listOfLists){
 			//Only want to do a step of unfinished solutions.
 			if(l.get(l.size()-1) != -1 && l.get(l.size()-1) != 0)
 				nextStepInSolution(l);
@@ -104,7 +99,6 @@ public class Bruteforce {
 				tempListOfSolutions.add(l);
 		}
 	}
-
 	
 	/*
 	 * This functions takes a list of integers(NodeID's), finds the last entry(CurrentNode) and then finds all the paths this node leads
@@ -112,9 +106,7 @@ public class Bruteforce {
 	 * solution from the old one and adds the paths nodeID to the solution. If it have been to this node before it does nothing and goes
 	 * to the next path.
 	 */
-
-	private void nextStepInSolution(ArrayList<Integer> solution)
-	{
+	private void nextStepInSolution(ArrayList<Integer> solution){
 		//First find the currentNode for this specific solution.
 		Node currentNode = findCurrentNode(solution);
 		
@@ -124,31 +116,21 @@ public class Bruteforce {
 		//Is used to check if the selected route is already in the list
 		boolean exsistBefore = false;
 		
-		for(Node n : currentNode.getPath())
-		{
+		for(Node n : currentNode.getPath()){
 			exsistBefore = checkIfSolutionLoops(n, solution);
 
-			if(!exsistBefore)
-			{
+			if(!exsistBefore){
 				createCloneSolution(solution, n.NodeID);
 			}
-
 		}
-
-
 	}
-
 	
 	/*
-	 * It takes a solution list, and searches for the node with the ID same as the last Integer as the last entery in the solution.
+	 * It takes a solution list, and searches for the node with the ID same as the last Integer as the last entry in the solution.
 	 */
-
-	private Node findCurrentNode(ArrayList<Integer> solution)
-	{
-		for(Node n : listOfNodes)
-		{
-			if(n.NodeID == solution.get(solution.size()-1))
-			{
+	private Node findCurrentNode(ArrayList<Integer> solution){
+		for(Node n : listOfNodes){
+			if(n.NodeID == solution.get(solution.size()-1)){
 				return n;
 			}
 		}
@@ -158,13 +140,9 @@ public class Bruteforce {
 	/*
 	 * Checks if the node is already in the list, if it is, it return true, else it return false.
 	 */
-
-	private boolean checkIfSolutionLoops(Node n, ArrayList<Integer> l)
-	{
-		for(int i : l)
-		{
-			if(n.NodeID == i)
-			{
+	private boolean checkIfSolutionLoops(Node n, ArrayList<Integer> l){
+		for(int i : l){
+			if(n.NodeID == i){
 				return true;
 			}
 		}
@@ -175,48 +153,35 @@ public class Bruteforce {
 	/*
 	 * Clones a solution, then adds the given integer to the list as the last entry. Then it saves it to tempListOfSolutions.
 	 */
-
-	private void createCloneSolution(ArrayList<Integer> list, int nextNode)
-	{
+	private void createCloneSolution(ArrayList<Integer> list, int nextNode){
 		ArrayList<Integer> newClone = new ArrayList<Integer>();
 		newClone.addAll(list);
 		newClone.add(nextNode);
 		tempListOfSolutions.add(newClone);
 	}
-
 	
 	/*
 	 * Test to see if all the solutions are legal solutions. A legal or vial solution is a solution that ends with a 0.
 	 * returns false if there is one or more solutions that do not have 0 as their last entry.
 	 * else it return true.
 	 */
-
-	private boolean isDone(ArrayList<ArrayList<Integer>> list)
-	{
-		for(ArrayList<Integer> l : list)
-		{
-			if(l.get(l.size()-1) != 0)
-			{
+	private boolean isDone(ArrayList<ArrayList<Integer>> list){
+		for(ArrayList<Integer> l : list){
+			if(l.get(l.size()-1) != 0){
 				return false;
 			}
 		}
-
 		return true;
 	}
 
-	
 	/*
 	 * Checks if the solution have reached node 8, witch is the end node in our test scenario.
 	 * TO DO: Needs to change so that more nodes may be end-points, and not only node with ID = 8.
 	 * Maybe create a boolean in the nodes that is true if it is a legal end-point.
 	 */
-
-	private void isAtEnd(ArrayList<ArrayList<Integer>> list)
-	{
-		for(ArrayList<Integer> l : list)
-		{
-			if(l.get(l.size()-1) == 8)
-			{
+	private void isAtEnd(ArrayList<ArrayList<Integer>> list){
+		for(ArrayList<Integer> l : list){
+			if(l.get(l.size()-1) == 8){
 				l.add(0);
 			}
 		}
@@ -226,47 +191,35 @@ public class Bruteforce {
 	 * Goes trough the list, and finds the shortest list. Then it finds all the lists with this lengths and returns
 	 * all those lists.
 	 */
-	private ArrayList<ArrayList<Integer>> findBestSolutions(ArrayList<ArrayList<Integer>> list)
-	{
+	private ArrayList<ArrayList<Integer>> findBestSolutions(ArrayList<ArrayList<Integer>> list){
 		ArrayList<ArrayList<Integer>> theBest = new ArrayList<ArrayList<Integer>>();
 		ArrayList<Integer> prev = list.get(0);
-		for(ArrayList<Integer> l : list)
-		{
-			if(prev.size() > l.size())
-			{
+		for(ArrayList<Integer> l : list){
+			if(prev.size() > l.size()){
 				prev = l;
 			}
 		}
-		for(ArrayList<Integer> l : list)
-		{
-			if(prev.size() == l.size())
-			{
+		for(ArrayList<Integer> l : list){
+			if(prev.size() == l.size()){
 				theBest.add(l);
 			}
 		}
-
 		return theBest;
 	}
 
-	
 	/*
 	 * Takes a list with list of integers, then proceeds to print them out all the integers, list by list.
 	 */
-
-	public void printSolutions (ArrayList<ArrayList<Integer>> list)
-	{
+	public void printSolutions (ArrayList<ArrayList<Integer>> list){
 		int number = 1;
-		for(ArrayList<Integer> l : list)
-		{
+		for(ArrayList<Integer> l : list){
 			System.out.print("Solution number "+number+": ");
 			number++;
-			for(int i : l)
-			{
+			for(int i : l){
 				System.out.print(" "+i);
 			}
 			System.out.println(".");
 		}
-
 	}
 	public Bruteforce(){
 		
