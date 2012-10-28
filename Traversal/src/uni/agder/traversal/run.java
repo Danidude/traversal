@@ -26,6 +26,6 @@ public class Run {
 		graph.generateRandomGraph(10, 2);
 		graph.generateRandomHumans(5);
 		RandomTraversal randomTraversal = new RandomTraversal();	
-		randomTraversal.randomTraversal(graph.getHumans(), graph.getNodes(), graph, 1, 2);
+		randomTraversal.randomTraversal(graph.getHumans(), graph.getNodes(), graph, 2, 2);
 	}
 }
