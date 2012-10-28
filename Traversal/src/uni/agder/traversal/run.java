@@ -8,8 +8,7 @@ public class Run {
 	static ArrayList<ArrayList<Integer>> solutions;
 	public static void main(String [ ] args)
 	{
-		graph = new Graph();
-		Human human1 = new Human();
+		/*Human human1 = new Human();
 		human1.setCurrentNode(1);
 		graph.addHuman(human1);
 		bruteForce = new Bruteforce();
@@ -21,6 +20,12 @@ public class Run {
 		}
 		else
 			bruteForce.printSolutions(solutions);
-	
+	*/
+		
+		graph = new Graph();
+		graph.generateRandomGraph(10, 2);
+		graph.generateRandomHumans(5);
+		RandomTraversal randomTraversal = new RandomTraversal();	
+		randomTraversal.randomTraversal(graph.getHumans(), graph.getNodes(), graph, 1, 2);
 	}
 }

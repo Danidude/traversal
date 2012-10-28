@@ -16,19 +16,30 @@ public class Node {
 	private NodeType nodeType;
 	private List<Node> listOfPaths;
 	public int NodeID;
-	
+	private boolean isExit;
+
+	public Node(int ID){
+		this.NodeID = ID;
+		this.nodeType = randomEnum.random();
+		this.isExit = false;
+		chanceOfDeath = 0;
+	}
+
+	public boolean isExit() {
+		return isExit;
+	}
+
+	public void setExit(boolean isExit) {
+		this.isExit = isExit;
+	}
+
 	public int getSize(){
 		if(this.listOfPaths == null){
 			return 0;
 		}
 		else return listOfPaths.size();
 	}
-	
-	public Node(int ID){
-		this.NodeID = ID;
-		this.nodeType = randomEnum.random();
-	}
-	
+
 	public int getCapacity() {
 		return capacity;
 	}
@@ -83,16 +94,16 @@ public class Node {
 			return values[randomGenerator.nextInt(values.length)];
 		}
 	}
-	
+
 	public void printPath()
 	{
 		System.out.print("Node "+NodeID+" that is a "+nodeType+" have access to ");
 		if(listOfPaths.size() != 0)
 		{
-		for (Node n : listOfPaths)
-		{
-			System.out.print(n.NodeID+" ");
-		}
+			for (Node n : listOfPaths)
+			{
+				System.out.print(n.NodeID+" ");
+			}
 		}
 		System.out.println(" ");
 	}

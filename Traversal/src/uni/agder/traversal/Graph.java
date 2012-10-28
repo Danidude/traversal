@@ -8,7 +8,7 @@ public class Graph {
 
 	private List<Human> listOfHumans = new ArrayList<Human>();
 	private List<Node> listOfNodes = new ArrayList<Node>();
-	private int nextNodeID = 1;
+	private int nodeID = 0;
 
 	/*
 	 * Step one: Create any number of nodes, for instance by using a random
@@ -36,7 +36,7 @@ public class Graph {
 	
 	private Node createNode()
 	{
-		Node newNode = new Node(nextNodeID++);
+		Node newNode = new Node(nodeID++);
 		return newNode;
 	}
 	
@@ -77,6 +77,10 @@ public class Graph {
 		listOfHumans.add(human1);	
 	}
 	
+	/*
+	 * Does not actually create n branches but rather ~n. A feature-bug likely created
+	 * by random.nextInt(x) as this is from 0 (inclusive) to x (exclusive)
+	 */
 	public void randomGraph(int nodes, int branches){
 		Random random = new Random();
 		for(int i = 0; i < nodes; i++){
@@ -113,6 +117,12 @@ public class Graph {
 		Random randomNode = new Random();
 		for(Human h : listOfHumans){
 			h.setCurrentNode(randomNode.nextInt(listOfNodes.size()));
+		}
+	}
+	
+	public void printHumans(){
+		for(Human h : listOfHumans){
+			System.out.println("There is a human at: " + h.getCurrentNode());
 		}
 	}
 }

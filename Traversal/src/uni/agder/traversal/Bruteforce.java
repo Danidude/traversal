@@ -73,7 +73,7 @@ public class Bruteforce {
 	/*
 	 * Finds the node we want to start the bruteforce from.
 	 * Current it finds what node the human 0 stands in.
-	 * TO DO: Move this function into Graph, takes a human and returns the node that human stands in.
+	 * TODO: Move this function into Graph, takes a human and returns the node that human stands in.
 	 */
 	private Node findStartNode(List<Node> nlist, List<Human> hList)
 	{
@@ -176,7 +176,7 @@ public class Bruteforce {
 
 	/*
 	 * Checks if the solution have reached node 8, witch is the end node in our test scenario.
-	 * TO DO: Needs to change so that more nodes may be end-points, and not only node with ID = 8.
+	 * TODO: Needs to change so that more nodes may be end-points, and not only node with ID = 8.
 	 * Maybe create a boolean in the nodes that is true if it is a legal end-point.
 	 */
 	private void isAtEnd(ArrayList<ArrayList<Integer>> list){
