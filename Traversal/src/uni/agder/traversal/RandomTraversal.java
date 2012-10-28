@@ -4,29 +4,45 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomTraversal {
-	/*
-	 * Get the graph
-	 * Get a list of all humans
-	 * For each human: select a random path until you either reach the exit or die
-	 * Print amount of survivors and total amount of humans at start
-	 */
-
+	
 	Random random = new Random();
-
+	
+	/*
+	 * First takes all the humans in the list of humans and places them in random positions in the 
+	 * graph. Multiple people can be assigned to the same node. Next it assigns exit nodes, if a 
+	 * node is already an exit node another node will be assigned. Then it does the same for the
+	 * nodes chance of death. A node cannot both be an exit node and a lethal node. Then for each
+	 * human, they will will get the node they are currently standing in, then pick a random path 
+	 * out of the node and continue doing so until they either die or reach the exit. 
+	 */
 	public void randomTraversal(List<Human> listOfHumans, List<Node> listOfNodes, Graph graph, int exits, int lethalNodes){
 		graph.placeAllHumans();
 		graph.printHumans();
-		// TODO: This can cause the same node to be assigned as an exit multiple times, fix it
-		for(int i = 0; i < exits; i++){
-			listOfNodes.get(random.nextInt(listOfNodes.size())).setExit(true);
+		
+		for(int i = 0; i < exits;){
+			int exit = random.nextInt(listOfNodes.size());
+			if(listOfNodes.get(exit).isExit()){
+				 
+			}
+			else{
+				listOfNodes.get(exit).setExit(true);
+				i++;
+			}			
 		}
-		// TODO: Do this properly, same problem as above
-		for(int i = 0; i < lethalNodes; i++){
-			listOfNodes.get(random.nextInt(listOfNodes.size())).setChanceOfDeath(1);
+		
+		for(int i = 0; i < lethalNodes;){
+			int lethal = random.nextInt(listOfNodes.size());
+			if(listOfNodes.get(lethal).getChanceOfDeath() != 0 || listOfNodes.get(lethal).isExit()){
+				
+			}
+			else{
+				listOfNodes.get(lethal).setChanceOfDeath(1);
+				i++;
+			}
 		}
 		
 		for(Node n : listOfNodes){
-			if(n.getChanceOfDeath()==1){
+			if(n.getChanceOfDeath() != 0){
 				System.out.println("Node " + n.NodeID + " is lethal");
 			}
 			if(n.isExit()){
