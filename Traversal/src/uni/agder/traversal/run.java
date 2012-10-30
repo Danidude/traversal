@@ -11,7 +11,7 @@ public class Run {
 		/*Human human1 = new Human();
 		human1.setCurrentNode(1);
 		graph.addHuman(human1);
-		bruteForce = new Bruteforce();
+		
 		graph.generateRandomGraph(50, 2);
 		solutions = bruteForce.bruteForceGraph(graph);
 		if(solutions == null)
@@ -21,11 +21,17 @@ public class Run {
 		else
 			bruteForce.printSolutions(solutions);
 	*/
+		bruteForce = new Bruteforce();
 		
 		graph = new Graph();
 		graph.generateRandomGraph(10, 2);
 		graph.generateRandomHumans(5);
+		graph.createExits(2);
+		graph.createLeathalNodes(2);
+		graph.setRandomHumanStartingPosition();
 		RandomTraversal randomTraversal = new RandomTraversal();	
 		randomTraversal.randomTraversal(graph.getHumans(), graph.getNodes(), graph, 2, 2);
+		
+		//bruteForce.bruteForceGraph(graph);
 	}
 }

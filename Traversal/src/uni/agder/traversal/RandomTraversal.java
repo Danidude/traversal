@@ -19,28 +19,6 @@ public class RandomTraversal {
 		graph.placeAllHumans();
 		graph.printHumans();
 		
-		for(int i = 0; i < exits;){
-			int exit = random.nextInt(listOfNodes.size());
-			if(listOfNodes.get(exit).isExit()){
-				 
-			}
-			else{
-				listOfNodes.get(exit).setExit(true);
-				i++;
-			}			
-		}
-		
-		for(int i = 0; i < lethalNodes;){
-			int lethal = random.nextInt(listOfNodes.size());
-			if(listOfNodes.get(lethal).getChanceOfDeath() != 0 || listOfNodes.get(lethal).isExit()){
-				
-			}
-			else{
-				listOfNodes.get(lethal).setChanceOfDeath(1);
-				i++;
-			}
-		}
-		
 		for(Node n : listOfNodes){
 			if(n.getChanceOfDeath() != 0){
 				System.out.println("Node " + n.NodeID + " is lethal");

@@ -125,6 +125,45 @@ public class Graph {
 			System.out.println("There is a human at: " + h.getCurrentNode());
 		}
 	}
+	
+	public void createExits(int numberOfExits)
+	{
+		int counter = 1;
+		while(counter <= numberOfExits)
+		{
+			Random rand = new Random();
+			int luckyOne = rand.nextInt(listOfNodes.size()-1);
+			if(!listOfNodes.get(luckyOne).isExit())
+			{
+				listOfNodes.get(luckyOne).setExit(true);
+				counter++;
+			}
+		}
+	}
+	
+	public void setRandomHumanStartingPosition()
+	{
+		for(Human h : listOfHumans)
+		{
+			Random rand = new Random();
+			h.setCurrentNode(rand.nextInt(listOfNodes.size()-1));
+		}
+	}
+	
+	public void createLeathalNodes(int numberOfLeathalNodes)
+	{
+		int counter = 1;
+		while(counter <= numberOfLeathalNodes)
+		{
+			Random rand = new Random();
+			int luckyOne = rand.nextInt(listOfNodes.size()-1);
+			if(!listOfNodes.get(luckyOne).isExit() && listOfNodes.get(luckyOne).getChanceOfDeath() == 0)
+			{
+				listOfNodes.get(luckyOne).setChanceOfDeath(1);
+				counter++;
+			}
+		}
+	}
 }
 
 

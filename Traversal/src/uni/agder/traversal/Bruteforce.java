@@ -3,6 +3,7 @@ package uni.agder.traversal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 /*
  * This class will bruteforce a Created graph, and return the best path from a given stating node
  * to the end point. At the moment is the start point, human 0 in the given graph, and endpoint is the node with ID = 8.
@@ -41,21 +42,31 @@ public class Bruteforce {
 	private ArrayList<ArrayList<Integer>> tempListOfSolutions;
 	private ArrayList<Integer> solution;
 	private List<Node> listOfNodes = new ArrayList<Node>();
-	private Node startNode;
+	private List<Human> listOfHumans = new ArrayList<Human>();
 	private boolean isFinished;
+	private Map<ArrayList<Integer>, Integer> solutionAndSurviebillity;
 
 	//Main function.
 	public ArrayList<ArrayList<Integer>> bruteForceGraph(Graph graph)
 	{
-		listOfNodes = graph.getNodes();		
-		startNode = findStartNode(listOfNodes, graph.getHumans());
-		if(startNode == null)
-			return null;
-		solution = new ArrayList<Integer>();
+		listOfNodes = graph.getNodes();
+		listOfHumans = graph.getHumans();
+		
+		findStartNode(listOfNodes, listOfHumans);
+		
+		/*solution = new ArrayList<Integer>();
 		solution.add(startNode.NodeID);
-		listOfSolutions.add(solution);
-		isFinished = false;
+		listOfSolutions.add(solution);*/
+		
+		solutionLoop();
 
+		//listOfSolutions = findBestSolutions(listOfSolutions);
+		return listOfSolutions;
+	}
+	
+	private void solutionLoop()
+	{
+		isFinished = false;
 		while (!isFinished)
 		{
 			tempListOfSolutions = new ArrayList<ArrayList<Integer>>();
@@ -65,9 +76,6 @@ public class Bruteforce {
 			isFinished = isDone(listOfSolutions);
 			isAtEnd(listOfSolutions);
 		}
-
-		listOfSolutions = findBestSolutions(listOfSolutions);
-		return listOfSolutions;
 	}
 
 	/*
@@ -75,13 +83,24 @@ public class Bruteforce {
 	 * Current it finds what node the human 0 stands in.
 	 * TODO: Move this function into Graph, takes a human and returns the node that human stands in.
 	 */
-	private Node findStartNode(List<Node> nlist, List<Human> hList)
+	private void findStartNode(List<Node> nList, List<Human> hList)
 	{
-		for (Node n : nlist){
-			if(n.NodeID == hList.get(0).getCurrentNode())
-				return n;
+		List<Integer> startingNodes = new ArrayList<Integer>();
+		for(Human h : hList){
+			for(Node n : nList)
+			{
+				if(!startingNodes.contains(n.NodeID) && n.NodeID == h.getCurrentNode())
+				{
+					startingNodes.add(n.NodeID);
+					solution = new ArrayList<Integer>();
+					solution.add(n.NodeID);
+					listOfSolutions.add(solution);
+				}
+				
+			}
+				
 		}
-		return null;
+		
 	}
 	/*
 	 * This goes trough all the solutions, checks if they ends with 0 or -1.
@@ -92,10 +111,10 @@ public class Bruteforce {
 	private void bruteForceStep(ArrayList<ArrayList<Integer>> listOfLists){
 		for(ArrayList<Integer> l : listOfLists){
 			//Only want to do a step of unfinished solutions.
-			if(l.get(l.size()-1) != -1 && l.get(l.size()-1) != 0)
+			if(l.get(l.size()-1) != -1)
 				nextStepInSolution(l);
 			//If it is a solution that is solved, it adds it so tempList, so it is kept.
-			else if(l.get(l.size()-1) == 0)
+			else if(l.get(l.size()-1) == -1)
 				tempListOfSolutions.add(l);
 		}
 	}
@@ -161,13 +180,13 @@ public class Bruteforce {
 	}
 	
 	/*
-	 * Test to see if all the solutions are legal solutions. A legal or vial solution is a solution that ends with a 0.
+	 * Test to see if all the solutions are legal solutions. A legal or vial solution is a solution that ends with a -1.
 	 * returns false if there is one or more solutions that do not have 0 as their last entry.
 	 * else it return true.
 	 */
 	private boolean isDone(ArrayList<ArrayList<Integer>> list){
 		for(ArrayList<Integer> l : list){
-			if(l.get(l.size()-1) != 0){
+			if(l.get(l.size()-1) != -1){
 				return false;
 			}
 		}
@@ -181,8 +200,12 @@ public class Bruteforce {
 	 */
 	private void isAtEnd(ArrayList<ArrayList<Integer>> list){
 		for(ArrayList<Integer> l : list){
-			if(l.get(l.size()-1) == 8){
-				l.add(0);
+			for(Node n : listOfNodes)
+			{
+				if(l.get(l.size()-1) == n.NodeID && n.isExit())
+				{
+					l.add(-1);
+				}
 			}
 		}
 	}
@@ -221,6 +244,12 @@ public class Bruteforce {
 			System.out.println(".");
 		}
 	}
+	
+	public void checkSolutionForDeaths()
+	{
+		
+	}
+	
 	public Bruteforce(){
 		
 	}
