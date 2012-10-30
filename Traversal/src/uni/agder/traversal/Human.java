@@ -13,10 +13,12 @@ public class Human {
 	private Age age;
 	private Gender gender;
 	private int currentNode;
+	public boolean hasPath;
 	
 	public Human(){
 		this.age = randomAgeEnum.random();
 		this.gender = randomGenderEnum.random();
+		hasPath = false;
 	}
 	
 	public void setCurrentNode(int i){

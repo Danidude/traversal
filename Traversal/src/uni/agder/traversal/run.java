@@ -32,6 +32,6 @@ public class Run {
 		RandomTraversal randomTraversal = new RandomTraversal();	
 		randomTraversal.randomTraversal(graph.getHumans(), graph.getNodes(), graph, 2, 2);
 		
-		//bruteForce.bruteForceGraph(graph);
+		bruteForce.bruteForceGraph(graph);
 	}
 }

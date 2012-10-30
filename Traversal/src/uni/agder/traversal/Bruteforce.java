@@ -69,12 +69,13 @@ public class Bruteforce {
 		isFinished = false;
 		while (!isFinished)
 		{
+			isAtEnd(listOfSolutions);
 			tempListOfSolutions = new ArrayList<ArrayList<Integer>>();
 			bruteForceStep(listOfSolutions);
 			listOfSolutions.clear();
 			listOfSolutions.addAll(tempListOfSolutions);
 			isFinished = isDone(listOfSolutions);
-			isAtEnd(listOfSolutions);
+			
 		}
 	}
 
@@ -205,6 +206,8 @@ public class Bruteforce {
 				if(l.get(l.size()-1) == n.NodeID && n.isExit())
 				{
 					l.add(-1);
+					setHumanHasPath(l);
+					
 				}
 			}
 		}
@@ -245,9 +248,20 @@ public class Bruteforce {
 		}
 	}
 	
-	public void checkSolutionForDeaths()
+	private void checkSolutionForDeaths()
 	{
 		
+	}
+	
+	private void setHumanHasPath(ArrayList<Integer> list)
+	{
+		for(Human h : listOfHumans)
+		{
+			if(h.getCurrentNode() == list.get(0))
+			{
+				h.hasPath = true;
+			}
+		}
 	}
 	
 	public Bruteforce(){

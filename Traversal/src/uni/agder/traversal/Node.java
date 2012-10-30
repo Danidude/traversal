@@ -16,6 +16,7 @@ public class Node {
 	private NodeType nodeType;
 	private List<Node> listOfPaths;
 	public int NodeID;
+	
 	private boolean isExit;
 
 	public Node(int ID){
@@ -23,6 +24,7 @@ public class Node {
 		this.nodeType = randomEnum.random();
 		this.isExit = false;
 		chanceOfDeath = 0;
+		
 	}
 
 	public boolean isExit() {
