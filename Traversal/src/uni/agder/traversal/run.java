@@ -29,8 +29,8 @@ public class Run {
 		graph.createExits(2);
 		graph.createLeathalNodes(2);
 		graph.setRandomHumanStartingPosition();
-		RandomTraversal randomTraversal = new RandomTraversal();	
-		randomTraversal.randomTraversal(graph.getHumans(), graph.getNodes(), graph, 2, 2);
+		/*RandomTraversal randomTraversal = new RandomTraversal();	
+		randomTraversal.randomTraversal(graph.getHumans(), graph.getNodes(), graph, 2, 2);*/
 		
 		bruteForce.bruteForceGraph(graph);
 	}

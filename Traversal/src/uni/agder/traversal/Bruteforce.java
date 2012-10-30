@@ -2,6 +2,7 @@ package uni.agder.traversal;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 /*
@@ -47,10 +48,13 @@ public class Bruteforce {
 	private Map<ArrayList<Integer>, Integer> solutionAndSurviebillity;
 
 	//Main function.
-	public ArrayList<ArrayList<Integer>> bruteForceGraph(Graph graph)
+	public Map<ArrayList<Integer>, Integer>  bruteForceGraph(Graph graph)
 	{
 		listOfNodes = graph.getNodes();
 		listOfHumans = graph.getHumans();
+		solutionAndSurviebillity = new HashMap<ArrayList<Integer>, Integer>();
+		printHumanStartingLocations();
+		printNodeTypes();
 		
 		findStartNode(listOfNodes, listOfHumans);
 		
@@ -59,9 +63,11 @@ public class Bruteforce {
 		listOfSolutions.add(solution);*/
 		
 		solutionLoop();
+		
+		checkSolutionForDeaths();
 
 		//listOfSolutions = findBestSolutions(listOfSolutions);
-		return listOfSolutions;
+		return solutionAndSurviebillity;
 	}
 	
 	private void solutionLoop()
@@ -79,6 +85,25 @@ public class Bruteforce {
 		}
 	}
 
+	private void printNodeTypes()
+	{
+		for(Node n : listOfNodes){
+			if(n.getChanceOfDeath() != 0){
+				System.out.println("Node " + n.NodeID + " is lethal");
+			}
+			if(n.isExit()){
+				System.out.println("Node " + n.NodeID + " is an exit");
+			}
+		}
+	}
+	
+	private void printHumanStartingLocations()
+	{
+		for(Human h: listOfHumans)
+		{
+			System.out.println("Human starts at node "+h.getCurrentNode());
+		}
+	}
 	/*
 	 * Finds the node we want to start the bruteforce from.
 	 * Current it finds what node the human 0 stands in.
@@ -247,12 +272,41 @@ public class Bruteforce {
 			System.out.println(".");
 		}
 	}
-	
+	/*
+	 * This function takes all the solutions and adds their chanceOfDeath togheter and put the list and the total value into a map
+	 * TODO: Not add the values, but calculate the actual chanceOfDeath.
+	 */
 	private void checkSolutionForDeaths()
 	{
-		
+		for(ArrayList<Integer> list: listOfSolutions)
+		{
+			int chanceOfDeath = 0;
+			for(Node n: listOfNodes)
+			{
+				if(n.getChanceOfDeath() > 0 && list.contains(n.NodeID))
+				{
+					chanceOfDeath += n.getChanceOfDeath();
+				}
+			}
+			solutionAndSurviebillity.put(list, chanceOfDeath);
+			
+		}
 	}
 	
+	private void runTheHumansTroughTheBestSolution()
+	{
+		for(Human h:listOfHumans)
+		{
+			for(ArrayList<Integer> l: listOfSolutions)
+			{
+				
+			}
+		}
+	}
+	
+	/*
+	 * Sets the hasPath on humans, so that the random knows that this human do have a valid way to get to an exit.
+	 */
 	private void setHumanHasPath(ArrayList<Integer> list)
 	{
 		for(Human h : listOfHumans)
@@ -267,4 +321,6 @@ public class Bruteforce {
 	public Bruteforce(){
 		
 	}
+	
+	
 }
