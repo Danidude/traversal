@@ -19,18 +19,16 @@ public class Run {
 		else
 			bruteForce.printSolutions(solutions);
 	*/
-		
 		Bruteforce bruteForce = new Bruteforce();		
 		Graph graph = new Graph();
-		graph.generateRandomGraph(50, 2);
+		graph.generateRandomGraph(20, 2);
 		graph.generateRandomHumans(20);
 		graph.createExits(2);
 		graph.createLeathalNodes(2);
 		graph.placeAllHumans();
 		bruteForce.bruteForceGraph(graph);
 		RandomTraversal randomTraversal = new RandomTraversal();	
-		randomTraversal.randomTraversal(graph.getHumans(), graph.getNodes(), graph, 5, 4);
-		
+		randomTraversal.randomTraversal(graph.getHumans(), graph.getNodes(), graph, 4, 4);
 		
 	}
 }

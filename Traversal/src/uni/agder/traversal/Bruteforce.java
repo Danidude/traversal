@@ -81,6 +81,7 @@ public class Bruteforce {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void printNodeTypes(){
 		for(Node n : listOfNodes){
 			if(n.getChanceOfDeath() != 0){
@@ -92,6 +93,7 @@ public class Bruteforce {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void printHumanStartingLocations(){
 		for(Human h: listOfHumans){
 			System.out.println("Human starts at node "+h.getCurrentNode());

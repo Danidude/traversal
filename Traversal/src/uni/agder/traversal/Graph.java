@@ -9,6 +9,7 @@ public class Graph {
 	private List<Human> listOfHumans = new ArrayList<Human>();
 	private List<Node> listOfNodes = new ArrayList<Node>();
 	private int nodeID = 0;
+	Random random = new Random();
 
 	/*
 	 * Step one: Create any number of nodes
@@ -64,7 +65,6 @@ public class Graph {
 	}
 	
 	public void generateRandomGraph(int nodes, int branches){
-		Random random = new Random();
 		for(int i = 0; i < nodes; i++){
 			listOfNodes.add(createNode());
 		}
@@ -96,9 +96,8 @@ public class Graph {
 	}
 	
 	public void placeAllHumans(){
-		Random randomNode = new Random();
 		for(Human h : listOfHumans){
-			h.setCurrentNode(randomNode.nextInt(listOfNodes.size()));
+			h.setCurrentNode(random.nextInt(listOfNodes.size()));
 		}
 	}
 	
@@ -111,8 +110,7 @@ public class Graph {
 	public void createExits(int numberOfExits){
 		int counter = 1;
 		while(counter <= numberOfExits){
-			Random rand = new Random();
-			int luckyOne = rand.nextInt(listOfNodes.size());
+			int luckyOne = random.nextInt(listOfNodes.size());
 			if(!listOfNodes.get(luckyOne).isExit()){
 				listOfNodes.get(luckyOne).setExit(true);
 				counter++;
@@ -123,8 +121,7 @@ public class Graph {
 	public void createLeathalNodes(int numberOfLeathalNodes){
 		int counter = 1;
 		while(counter <= numberOfLeathalNodes){
-			Random rand = new Random();
-			int lethal = rand.nextInt(listOfNodes.size());
+			int lethal = random.nextInt(listOfNodes.size());
 			if(!listOfNodes.get(lethal).isExit() && listOfNodes.get(lethal).getChanceOfDeath() == 0){
 				listOfNodes.get(lethal).setChanceOfDeath(1);
 				counter++;
