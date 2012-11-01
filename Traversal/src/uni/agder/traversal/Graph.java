@@ -11,13 +11,10 @@ public class Graph {
 	private int nodeID = 0;
 
 	/*
-	 * Step one: Create any number of nodes, for instance by using a random
-	 * function with a minimum and maximum (rand.nextInt(max - min + 1) + min).
+	 * Step one: Create any number of nodes
 	 * Step two: Create branches by adding paths for each node (remember
 	 * that this is a graph and if node A has node B as a path B also
 	 * needs node A as a path).
-	 * Step three: Find all possible paths by traversing the graph
-	 * Step four: Count steps for all possible solutions and print best path
 	 */
 	public void generateFixedGraph() {
 		firstTestList();
@@ -27,24 +24,14 @@ public class Graph {
 		}
 	}
 	
-	public void generateRandomGraph(int nodes, int branches){
-		randomGraph(nodes, branches);
-		for (Node n : listOfNodes){
-			n.printPath();
-		}
-	}
-	
-	private Node createNode()
-	{
+	private Node createNode(){
 		Node newNode = new Node(nodeID++);
 		return newNode;
 	}
 	
-	//Just to create a test list
-	private void firstTestList()
-	{
-		for(int i = 0; i < 8; i++)
-		{
+	// Used to create specific graphs for testing purposes
+	private void firstTestList(){
+		for(int i = 0; i < 8; i++){
 			listOfNodes.add(createNode());
 		}
 	
@@ -66,8 +53,7 @@ public class Graph {
 		
 		//System.out.println(listOfNodes.size());
 		
-		for (Node n : listOfNodes)
-		{
+		for (Node n : listOfNodes){
 			n.printPath();
 			//System.out.println(listOfNodes.size());
 		}
@@ -77,11 +63,7 @@ public class Graph {
 		listOfHumans.add(human1);	
 	}
 	
-	/*
-	 * Does not actually create n branches but rather ~n. A feature-bug likely created
-	 * by random.nextInt(x) as this is from 0 (inclusive) to x (exclusive)
-	 */
-	public void randomGraph(int nodes, int branches){
+	public void generateRandomGraph(int nodes, int branches){
 		Random random = new Random();
 		for(int i = 0; i < nodes; i++){
 			listOfNodes.add(createNode());
@@ -126,42 +108,44 @@ public class Graph {
 		}
 	}
 	
-	public void createExits(int numberOfExits)
-	{
+	public void createExits(int numberOfExits){
 		int counter = 1;
-		while(counter <= numberOfExits)
-		{
+		while(counter <= numberOfExits){
 			Random rand = new Random();
-			int luckyOne = rand.nextInt(listOfNodes.size()-1);
-			if(!listOfNodes.get(luckyOne).isExit())
-			{
+			int luckyOne = rand.nextInt(listOfNodes.size());
+			if(!listOfNodes.get(luckyOne).isExit()){
 				listOfNodes.get(luckyOne).setExit(true);
 				counter++;
 			}
 		}
 	}
 	
-	public void setRandomHumanStartingPosition()
-	{
-		for(Human h : listOfHumans)
-		{
+	public void createLeathalNodes(int numberOfLeathalNodes){
+		int counter = 1;
+		while(counter <= numberOfLeathalNodes){
 			Random rand = new Random();
-			h.setCurrentNode(rand.nextInt(listOfNodes.size()-1));
+			int lethal = rand.nextInt(listOfNodes.size());
+			if(!listOfNodes.get(lethal).isExit() && listOfNodes.get(lethal).getChanceOfDeath() == 0){
+				listOfNodes.get(lethal).setChanceOfDeath(1);
+				counter++;
+			}
 		}
 	}
 	
-	public void createLeathalNodes(int numberOfLeathalNodes)
-	{
-		int counter = 1;
-		while(counter <= numberOfLeathalNodes)
-		{
-			Random rand = new Random();
-			int luckyOne = rand.nextInt(listOfNodes.size()-1);
-			if(!listOfNodes.get(luckyOne).isExit() && listOfNodes.get(luckyOne).getChanceOfDeath() == 0)
-			{
-				listOfNodes.get(luckyOne).setChanceOfDeath(1);
-				counter++;
+	public void printSpecialNodes(){
+		for(Node n : listOfNodes){
+			if(n.getChanceOfDeath() != 0){
+				System.out.println("Node " + n.NodeID + " is lethal");
 			}
+			if(n.isExit()){
+				System.out.println("Node " + n.NodeID + " is an exit");
+			}
+		}
+	}
+	
+	public void printGraph(){
+		for (Node n : listOfNodes){
+			n.printPath();
 		}
 	}
 }

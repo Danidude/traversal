@@ -3,8 +3,6 @@ package uni.agder.traversal;
 import java.util.ArrayList;
 
 public class Run {
-	static Graph graph;
-	static Bruteforce bruteForce;
 	static ArrayList<ArrayList<Integer>> solutions;
 	public static void main(String [ ] args)
 	{
@@ -21,17 +19,18 @@ public class Run {
 		else
 			bruteForce.printSolutions(solutions);
 	*/
-		bruteForce = new Bruteforce();
 		
-		graph = new Graph();
-		graph.generateRandomGraph(10, 2);
-		graph.generateRandomHumans(5);
+		Bruteforce bruteForce = new Bruteforce();		
+		Graph graph = new Graph();
+		graph.generateRandomGraph(50, 2);
+		graph.generateRandomHumans(20);
 		graph.createExits(2);
 		graph.createLeathalNodes(2);
-		graph.setRandomHumanStartingPosition();
-		/*RandomTraversal randomTraversal = new RandomTraversal();	
-		randomTraversal.randomTraversal(graph.getHumans(), graph.getNodes(), graph, 2, 2);*/
-		
+		graph.placeAllHumans();
 		bruteForce.bruteForceGraph(graph);
+		RandomTraversal randomTraversal = new RandomTraversal();	
+		randomTraversal.randomTraversal(graph.getHumans(), graph.getNodes(), graph, 5, 4);
+		
+		
 	}
 }

@@ -15,8 +15,7 @@ public class Node {
 	private int capacity;
 	private NodeType nodeType;
 	private List<Node> listOfPaths;
-	public int NodeID;
-	
+	public int NodeID;	
 	private boolean isExit;
 
 	public Node(int ID){
@@ -70,15 +69,12 @@ public class Node {
 	public void addPath(Node node){
 		if(this.listOfPaths==null){listOfPaths = new ArrayList<Node> (); }
 		boolean isInList = false;
-		for (Node n : listOfPaths)
-		{
-			if (n.NodeID == node.NodeID)
-			{
+		for (Node n : listOfPaths){
+			if (n.NodeID == node.NodeID){
 				isInList=true;
 			}
 		}
-		if (isInList == false && node.NodeID != this.NodeID)
-		{
+		if (isInList == false && node.NodeID != this.NodeID){
 			this.listOfPaths.add(node);
 			node.addPath(this);
 		}	
@@ -97,13 +93,10 @@ public class Node {
 		}
 	}
 
-	public void printPath()
-	{
+	public void printPath(){
 		System.out.print("Node "+NodeID+" that is a "+nodeType+" have access to ");
-		if(listOfPaths.size() != 0)
-		{
-			for (Node n : listOfPaths)
-			{
+		if(listOfPaths.size() != 0){
+			for (Node n : listOfPaths){
 				System.out.print(n.NodeID+" ");
 			}
 		}

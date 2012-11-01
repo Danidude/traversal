@@ -47,46 +47,41 @@ public class Bruteforce {
 	private boolean isFinished;
 	private Map<ArrayList<Integer>, Integer> solutionAndSurviebillity;
 
-	//Main function.
-	public Map<ArrayList<Integer>, Integer>  bruteForceGraph(Graph graph)
-	{
+	public Map<ArrayList<Integer>, Integer>  bruteForceGraph(Graph graph){
 		listOfNodes = graph.getNodes();
 		listOfHumans = graph.getHumans();
 		solutionAndSurviebillity = new HashMap<ArrayList<Integer>, Integer>();
-		printHumanStartingLocations();
-		printNodeTypes();
-		
+		//printHumanStartingLocations();
+		//printNodeTypes();
+
 		findStartNode(listOfNodes, listOfHumans);
-		
+
 		/*solution = new ArrayList<Integer>();
 		solution.add(startNode.NodeID);
 		listOfSolutions.add(solution);*/
-		
+
 		solutionLoop();
-		
+
 		checkSolutionForDeaths();
 
 		//listOfSolutions = findBestSolutions(listOfSolutions);
 		return solutionAndSurviebillity;
 	}
-	
-	private void solutionLoop()
-	{
+
+	private void solutionLoop(){
 		isFinished = false;
-		while (!isFinished)
-		{
+		while (!isFinished){
 			isAtEnd(listOfSolutions);
 			tempListOfSolutions = new ArrayList<ArrayList<Integer>>();
 			bruteForceStep(listOfSolutions);
 			listOfSolutions.clear();
 			listOfSolutions.addAll(tempListOfSolutions);
 			isFinished = isDone(listOfSolutions);
-			
+
 		}
 	}
 
-	private void printNodeTypes()
-	{
+	private void printNodeTypes(){
 		for(Node n : listOfNodes){
 			if(n.getChanceOfDeath() != 0){
 				System.out.println("Node " + n.NodeID + " is lethal");
@@ -96,11 +91,9 @@ public class Bruteforce {
 			}
 		}
 	}
-	
-	private void printHumanStartingLocations()
-	{
-		for(Human h: listOfHumans)
-		{
+
+	private void printHumanStartingLocations(){
+		for(Human h: listOfHumans){
 			System.out.println("Human starts at node "+h.getCurrentNode());
 		}
 	}
@@ -109,24 +102,21 @@ public class Bruteforce {
 	 * Current it finds what node the human 0 stands in.
 	 * TODO: Move this function into Graph, takes a human and returns the node that human stands in.
 	 */
-	private void findStartNode(List<Node> nList, List<Human> hList)
-	{
+	private void findStartNode(List<Node> nList, List<Human> hList){
 		List<Integer> startingNodes = new ArrayList<Integer>();
 		for(Human h : hList){
-			for(Node n : nList)
-			{
-				if(!startingNodes.contains(n.NodeID) && n.NodeID == h.getCurrentNode())
-				{
+			for(Node n : nList){
+				if(!startingNodes.contains(n.NodeID) && n.NodeID == h.getCurrentNode()){
 					startingNodes.add(n.NodeID);
 					solution = new ArrayList<Integer>();
 					solution.add(n.NodeID);
 					listOfSolutions.add(solution);
 				}
-				
+
 			}
-				
+
 		}
-		
+
 	}
 	/*
 	 * This goes trough all the solutions, checks if they ends with 0 or -1.
@@ -144,7 +134,7 @@ public class Bruteforce {
 				tempListOfSolutions.add(l);
 		}
 	}
-	
+
 	/*
 	 * This functions takes a list of integers(NodeID's), finds the last entry(CurrentNode) and then finds all the paths this node leads
 	 * too. Once this is done, it checks each paths nodeID to see if the solution have been to this node before, if not, it creates a new
@@ -154,13 +144,13 @@ public class Bruteforce {
 	private void nextStepInSolution(ArrayList<Integer> solution){
 		//First find the currentNode for this specific solution.
 		Node currentNode = findCurrentNode(solution);
-		
+
 		//If it bugs out, just exit. (Just a safety measure.)
 		if (currentNode == null)
 			return;
 		//Is used to check if the selected route is already in the list
 		boolean exsistBefore = false;
-		
+
 		for(Node n : currentNode.getPath()){
 			exsistBefore = checkIfSolutionLoops(n, solution);
 
@@ -169,7 +159,7 @@ public class Bruteforce {
 			}
 		}
 	}
-	
+
 	/*
 	 * It takes a solution list, and searches for the node with the ID same as the last Integer as the last entry in the solution.
 	 */
@@ -181,7 +171,7 @@ public class Bruteforce {
 		}
 		return null;
 	}
-	
+
 	/*
 	 * Checks if the node is already in the list, if it is, it return true, else it return false.
 	 */
@@ -194,7 +184,7 @@ public class Bruteforce {
 		return false;
 	}
 
-	
+
 	/*
 	 * Clones a solution, then adds the given integer to the list as the last entry. Then it saves it to tempListOfSolutions.
 	 */
@@ -204,7 +194,7 @@ public class Bruteforce {
 		newClone.add(nextNode);
 		tempListOfSolutions.add(newClone);
 	}
-	
+
 	/*
 	 * Test to see if all the solutions are legal solutions. A legal or vial solution is a solution that ends with a -1.
 	 * returns false if there is one or more solutions that do not have 0 as their last entry.
@@ -226,18 +216,16 @@ public class Bruteforce {
 	 */
 	private void isAtEnd(ArrayList<ArrayList<Integer>> list){
 		for(ArrayList<Integer> l : list){
-			for(Node n : listOfNodes)
-			{
-				if(l.get(l.size()-1) == n.NodeID && n.isExit())
-				{
+			for(Node n : listOfNodes){
+				if(l.get(l.size()-1) == n.NodeID && n.isExit()){
 					l.add(-1);
 					setHumanHasPath(l);
-					
+
 				}
 			}
 		}
 	}
-	
+
 	/*
 	 * Goes trough the list, and finds the shortest list. Then it finds all the lists with this lengths and returns
 	 * all those lists.
@@ -276,51 +264,39 @@ public class Bruteforce {
 	 * This function takes all the solutions and adds their chanceOfDeath togheter and put the list and the total value into a map
 	 * TODO: Not add the values, but calculate the actual chanceOfDeath.
 	 */
-	private void checkSolutionForDeaths()
-	{
-		for(ArrayList<Integer> list: listOfSolutions)
-		{
+	private void checkSolutionForDeaths(){
+		for(ArrayList<Integer> list: listOfSolutions){
 			int chanceOfDeath = 0;
-			for(Node n: listOfNodes)
-			{
-				if(n.getChanceOfDeath() > 0 && list.contains(n.NodeID))
-				{
+			for(Node n: listOfNodes){
+				if(n.getChanceOfDeath() > 0 && list.contains(n.NodeID)){
 					chanceOfDeath += n.getChanceOfDeath();
 				}
 			}
 			solutionAndSurviebillity.put(list, chanceOfDeath);
-			
+
 		}
 	}
-	
-	private void runTheHumansTroughTheBestSolution()
-	{
-		for(Human h:listOfHumans)
-		{
-			for(ArrayList<Integer> l: listOfSolutions)
-			{
-				
+
+	private void runTheHumansTroughTheBestSolution(){
+		for(Human h:listOfHumans){
+			for(ArrayList<Integer> l: listOfSolutions){
+
 			}
 		}
 	}
-	
+
 	/*
 	 * Sets the hasPath on humans, so that the random knows that this human do have a valid way to get to an exit.
 	 */
-	private void setHumanHasPath(ArrayList<Integer> list)
-	{
-		for(Human h : listOfHumans)
-		{
-			if(h.getCurrentNode() == list.get(0))
-			{
+	private void setHumanHasPath(ArrayList<Integer> list){
+		for(Human h : listOfHumans){
+			if(h.getCurrentNode() == list.get(0)){
 				h.hasPath = true;
 			}
 		}
 	}
-	
+
 	public Bruteforce(){
-		
-	}
-	
-	
+
+	}	
 }
