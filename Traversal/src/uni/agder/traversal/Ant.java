@@ -1,0 +1,31 @@
+package uni.agder.traversal;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Ant {
+	private List<Node> visitedNodes;
+	private int distanceTraveled;
+	
+	public Ant(Node start){
+		distanceTraveled = 0;
+		visitedNodes = new ArrayList<Node>();
+		visitedNodes.add(start);
+	}
+	
+	public void die(){
+		
+	}
+	
+	public Node getCurrentNode(){
+		return visitedNodes.get(visitedNodes.size() - 1);
+	}
+	
+	public int getDistanceTraveled() {
+		return distanceTraveled;
+	}
+	
+	public void depositTrail(){
+		
+	}
+}
