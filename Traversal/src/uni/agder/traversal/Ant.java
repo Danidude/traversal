@@ -6,6 +6,7 @@ import java.util.List;
 public class Ant {
 	private List<Node> visitedNodes;
 	private int distanceTraveled;
+	private int totalPheromones = 100;
 	
 	public Ant(Node start){
 		distanceTraveled = 0;
@@ -25,7 +26,10 @@ public class Ant {
 		return distanceTraveled;
 	}
 	
-	public void depositTrail(){
-		
+	public void depositPheromones(){
+		int partialPheromones = totalPheromones/visitedNodes.size();
+		for(Node n : visitedNodes){
+			
+		}
 	}
 }
