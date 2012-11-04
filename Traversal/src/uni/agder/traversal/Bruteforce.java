@@ -61,7 +61,8 @@ public class Bruteforce {
 		listOfSolutions.add(solution);*/
 
 		solutionLoop();
-
+		
+		
 		checkSolutionForDeaths();
 
 		//listOfSolutions = findBestSolutions(listOfSolutions);
@@ -275,16 +276,29 @@ public class Bruteforce {
 				}
 			}
 			solutionAndSurviebillity.put(list, chanceOfDeath);
-
 		}
+		runTheHumansTroughTheBestSolution();
 	}
 
 	private void runTheHumansTroughTheBestSolution(){
+		int survivers = 0;
 		for(Human h:listOfHumans){
-			for(ArrayList<Integer> l: listOfSolutions){
-
+			for(ArrayList<Integer> l : listOfSolutions)
+			{
+				if(l.get(0) == h.getCurrentNode() && solutionAndSurviebillity.get(l) == 0)
+				{
+					survivers++;
+					
+					break;
+				}
 			}
 		}
+		System.out.println("In bruteforce "+survivers+" people survived out of "+listOfHumans.size());
+	}
+	
+	private void printAsolution(ArrayList<Integer> list)
+	{
+		
 	}
 
 	/*

@@ -35,6 +35,6 @@ public class RandomTraversal {
 			else{
 			}
 		}
-		System.out.println("Survivors: " + survivors);
+		System.out.println("Random have: Survivors: " + survivors);
 	} 
 }

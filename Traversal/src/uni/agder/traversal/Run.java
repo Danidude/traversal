@@ -21,10 +21,10 @@ public class Run {
 	*/
 		Bruteforce bruteForce = new Bruteforce();		
 		Graph graph = new Graph();
-		graph.generateRandomGraph(20, 2);
+		graph.generateRandomGraph(50, 2);
 		graph.generateRandomHumans(20);
 		graph.createExits(2);
-		graph.createLeathalNodes(2);
+		graph.createLeathalNodes(5);
 		graph.placeAllHumans();
 		bruteForce.bruteForceGraph(graph);
 		RandomTraversal randomTraversal = new RandomTraversal();	
