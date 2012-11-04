@@ -17,13 +17,22 @@ public class Node {
 	private List<Node> listOfPaths;
 	public int NodeID;	
 	private boolean isExit;
+	private int amountOfPheromones;
 
 	public Node(int ID){
 		this.NodeID = ID;
 		this.nodeType = randomEnum.random();
 		this.isExit = false;
 		chanceOfDeath = 0;
-		
+		amountOfPheromones = 0;		
+	}
+	
+	public int getAmountOfPheromones() {
+		return amountOfPheromones;
+	}
+
+	public void setAmountOfPheromones(int amountOfPheromones) {
+		this.amountOfPheromones = amountOfPheromones;
 	}
 
 	public boolean isExit() {

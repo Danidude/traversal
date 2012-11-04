@@ -8,4 +8,12 @@ public class AntSystem {
 	public AntSystem(Graph graph){
 		this.graph = graph;
 	}
+	
+	public void updatePheromonTrail(){
+		
+	}
+	
+	public void calculateTransitionProbabilities(){
+		
+	}
 }
