@@ -42,8 +42,4 @@ public class Ant {
 			totalPheromones++;
 		}
 	}
-	
-	public void chosePath(){
-		
-	}
 }
