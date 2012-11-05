@@ -1,8 +1,6 @@
 package uni.agder.traversal;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Random;
 
 public class AntSystem {
 	private int numberOfAnts = 1000;
@@ -10,24 +8,14 @@ public class AntSystem {
 	private double evaporation = 0.25;
 	/* Used to weigh the importance of the pheromone deposits */
 	private double alpha = 0.125;
-	/*Is a map over all the nodes and their pathData*/
-	private Map<Node, AntNodeData> allNodesData;
-	/*List of all the nodes in the graph*/
-	private ArrayList<Node> listOfNodes;
+	/*Used to determine the chosen path*/
+	Random rand;
+	
 	Graph graph;
 	
 	public AntSystem(Graph graph){
 		this.graph = graph;
-		listOfNodes = new ArrayList<Node>();
-		listOfNodes = (ArrayList<Node>) graph.getNodes();
-		
-		allNodesData = new HashMap<Node, AntNodeData>();
-		
-		for(Node n: listOfNodes)
-		{
-			AntNodeData nodeData = new AntNodeData(n);
-			allNodesData.put(n, nodeData);
-		}
+		rand = new Random();
 	}
 	
 	/*
@@ -35,7 +23,10 @@ public class AntSystem {
 	 * based on the evaporation.
 	 * */
 	public void updatePheromonTrail(){
-		
+		for(Node n : graph.getNodes()){
+			
+			n.increasPheromones((int)((1-0.2)*n.getAmountOfPheromones()));
+		}
 	}
 	
 	/*
@@ -47,32 +38,61 @@ public class AntSystem {
 	 * Make sure that the probability of all combined
 	 * choices equals 1.
 	 * */
-	public void calculateTransitionProbabilities(){
+	public boolean calculateTransitionProbabilities(Ant a){
+		int totalPheromones = a.getCurrentNode().getPath().size()-1;
+		for(Node n : a.getCurrentNode().getPath())
+		{
+			totalPheromones += n.getAmountOfPheromones();
+		}
 		
+		
+		/*Randomly selects a number of the total number of pheromones*/
+		int theChosenPathNumber = rand.nextInt(totalPheromones);
+		
+		int i = 0;
+		for(Node n: a.getCurrentNode().getPath())
+		{
+			if(theChosenPathNumber <= n.getAmountOfPheromones()+i)
+			{
+				return a.move(n);
+			}
+			else
+				i++;
+		}
+		System.out.println("Error: calculateTransitionProbabilities did not find path.");
+		return false;
+	}
+	
+	public void run()
+	{
+		for (Node n : graph.getNodes())
+		{	
+			if(!n.isExit())
+			runAnts(n);
+		}
 	}
 	
 	/*
-	 * Contains the proberbility for each path on an node.
-	 */
-	private class AntNodeData
+	 * Runs ants with a given current node.
+	 * */
+	private void runAnts(Node currentNode)
 	{
-		private int nodeID;
-		private Map<Node, Float> proberbiletyOfPath;
-		
-		public AntNodeData(Node n)
+		int antGroup = 0;
+		for (int i = 0; i<numberOfAnts; i++)
 		{
-			nodeID = n.NodeID;
-			proberbiletyOfPath = new HashMap<Node, Float>();
-			inizilizePathProb(n);
-		}
-		
-		private void inizilizePathProb(Node n)
-		{
-			float startProb = 1/n.getPath().size();
-			for(Node n2: n.getPath())
+			if(antGroup == 20)
 			{
-				proberbiletyOfPath.put(n2, startProb);
+				updatePheromonTrail();
 			}
+			Ant ant = new Ant(currentNode);
+			antGroup++;
+			boolean antMoving = true;
+			while(antMoving)
+			{
+				antMoving = calculateTransitionProbabilities(ant);
+			}
+				
 		}
 	}
+
 }

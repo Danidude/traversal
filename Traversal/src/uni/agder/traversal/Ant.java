@@ -7,6 +7,7 @@ public class Ant {
 	private List<Node> visitedNodes;
 	private int distanceTraveled;
 	private int totalPheromones = 100;
+	private Node currentNode;
 
 	public Ant(Node start){
 		distanceTraveled = 0;
@@ -19,6 +20,7 @@ public class Ant {
 	}
 
 	public Node getCurrentNode(){
+		currentNode = visitedNodes.get(visitedNodes.size() - 1);
 		return visitedNodes.get(visitedNodes.size() - 1);
 	}
 
@@ -29,17 +31,19 @@ public class Ant {
 	public void depositPheromones(){
 		int partialPheromones = totalPheromones/visitedNodes.size();
 		for(Node n : visitedNodes){
-			n.setAmountOfPheromones(partialPheromones);
+			n.increasPheromones(partialPheromones);
 		}
 	}
 
-	public void move(Node node){
+	public boolean move(Node node){
 		if(getCurrentNode().isExit()){
 			depositPheromones();
+			return false;
 		}
 		else{
 			visitedNodes.add(node);
-			totalPheromones++;
+			distanceTraveled++;
+			return true;
 		}
 	}
 }

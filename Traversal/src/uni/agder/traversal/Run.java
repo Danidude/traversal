@@ -21,7 +21,7 @@ public class Run {
 	*/
 		Bruteforce bruteForce = new Bruteforce();		
 		Graph graph = new Graph();
-		graph.generateRandomGraph(50, 2);
+		graph.generateRandomGraph(20, 2);
 		graph.generateRandomHumans(20);
 		graph.createExits(2);
 		graph.createLeathalNodes(5);
@@ -29,6 +29,8 @@ public class Run {
 		bruteForce.bruteForceGraph(graph);
 		RandomTraversal randomTraversal = new RandomTraversal();	
 		randomTraversal.randomTraversal(graph.getHumans(), graph.getNodes(), graph, 4, 4);
+		AntSystem antSys = new AntSystem(graph);
+		antSys.run();
 		
 	}
 }

@@ -34,6 +34,10 @@ public class Node {
 	public void setAmountOfPheromones(int amountOfPheromones) {
 		this.amountOfPheromones = amountOfPheromones;
 	}
+	
+	public void increasPheromones(int amountOfPheromones){
+		this.amountOfPheromones += amountOfPheromones;
+	}
 
 	public boolean isExit() {
 		return isExit;
