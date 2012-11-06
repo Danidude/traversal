@@ -9,6 +9,8 @@ public class AntSystem {
 	/* Used to weigh the importance of the pheromone deposits */
 	private double alpha = 0.125;
 	/*Used to determine the chosen path*/
+	private int atractiveness = 200;
+	/*The starting proberbility for each path*/
 	Random rand;
 	
 	Graph graph;
@@ -25,7 +27,7 @@ public class AntSystem {
 	public void updatePheromonTrail(){
 		for(Node n : graph.getNodes()){
 			
-			n.increasPheromones((int)((1-0.2)*n.getAmountOfPheromones()));
+			n.increasPheromones((int)((1-evaporation)*n.getAmountOfPheromones()));
 		}
 	}
 	
@@ -39,17 +41,18 @@ public class AntSystem {
 	 * choices equals 1.
 	 * */
 	public boolean calculateTransitionProbabilities(Ant a){
-		int totalPheromones = a.getCurrentNode().getPath().size()-1;
+		int totalPheromones = 0;
+		int totalChanceOfPath = atractiveness * a.getCurrentNode().getPath().size();
 		for(Node n : a.getCurrentNode().getPath())
 		{
 			totalPheromones += n.getAmountOfPheromones();
 		}
-		
+		int totalChance = totalChanceOfPath+totalPheromones;
 		
 		/*Randomly selects a number of the total number of pheromones*/
-		int theChosenPathNumber = rand.nextInt(totalPheromones);
+		int theChosenPathNumber = rand.nextInt(totalChance)+1;
 		
-		int i = 0;
+		int i = atractiveness;
 		for(Node n: a.getCurrentNode().getPath())
 		{
 			if(theChosenPathNumber <= n.getAmountOfPheromones()+i)
@@ -57,7 +60,7 @@ public class AntSystem {
 				return a.move(n);
 			}
 			else
-				i++;
+				i += atractiveness+n.getAmountOfPheromones();
 		}
 		System.out.println("Error: calculateTransitionProbabilities did not find path.");
 		return false;
@@ -91,6 +94,7 @@ public class AntSystem {
 			{
 				antMoving = calculateTransitionProbabilities(ant);
 			}
+			System.out.println("Done");
 				
 		}
 	}
