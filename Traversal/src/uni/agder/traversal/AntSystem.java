@@ -1,5 +1,6 @@
 package uni.agder.traversal;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class AntSystem {
@@ -79,7 +80,7 @@ public class AntSystem {
 	 * Runs ants with a given current node.
 	 * */
 	private void runAnts(Node currentNode)
-	{
+	{	ArrayList<Node> bestRoute = new ArrayList<Node>();
 		int antGroup = 0;
 		for (int i = 0; i<numberOfAnts; i++)
 		{
@@ -94,7 +95,10 @@ public class AntSystem {
 			{
 				antMoving = calculateTransitionProbabilities(ant);
 			}
-			System.out.println("Done");
+			
+			if(bestRoute.size() == 0 || ant.getVisitedNodes().size() < bestRoute.size())
+			bestRoute = (ArrayList<Node>) ant.getVisitedNodes();
+			System.out.println("Delete this");
 				
 		}
 	}

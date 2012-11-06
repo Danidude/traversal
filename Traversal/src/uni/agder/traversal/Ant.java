@@ -16,7 +16,7 @@ public class Ant {
 	}
 
 	public void die(){
-
+		
 	}
 
 	public Node getCurrentNode(){
@@ -45,5 +45,9 @@ public class Ant {
 			distanceTraveled++;
 			return true;
 		}
+	}
+	public List<Node> getVisitedNodes()
+	{
+		return visitedNodes;
 	}
 }
