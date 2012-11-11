@@ -17,13 +17,6 @@ public class Graph {
 	 * that this is a graph and if node A has node B as a path B also
 	 * needs node A as a path).
 	 */
-	public void generateFixedGraph() {
-		firstTestList();
-		for (Node n : listOfNodes)
-		{
-			n.printPath();
-		}
-	}
 	
 	private Node createNode(){
 		Node newNode = new Node(nodeID++);
@@ -31,37 +24,26 @@ public class Graph {
 	}
 	
 	// Used to create specific graphs for testing purposes
-	private void firstTestList(){
-		for(int i = 0; i < 8; i++){
+	@SuppressWarnings("unused")
+	private void generateTestCaseGraph(){
+		for(int i = 0; i < 7; i++){
 			listOfNodes.add(createNode());
 		}
 	
-		listOfNodes.get(0).addPath(listOfNodes.get(1));
 		listOfNodes.get(0).addPath(listOfNodes.get(3));
-		listOfNodes.get(0).addPath(listOfNodes.get(4));
+		listOfNodes.get(1).addPath(listOfNodes.get(4));
+		listOfNodes.get(2).addPath(listOfNodes.get(5));
 		
-		listOfNodes.get(2).addPath(listOfNodes.get(1));
-		listOfNodes.get(2).addPath(listOfNodes.get(3));
-		listOfNodes.get(2).addPath(listOfNodes.get(6));
+		listOfNodes.get(3).addPath(listOfNodes.get(4));
+		listOfNodes.get(4).addPath(listOfNodes.get(5));
 		
-		listOfNodes.get(5).addPath(listOfNodes.get(4));
+		listOfNodes.get(3).addPath(listOfNodes.get(6));
+		listOfNodes.get(4).addPath(listOfNodes.get(6));
 		listOfNodes.get(5).addPath(listOfNodes.get(6));
-		listOfNodes.get(5).addPath(listOfNodes.get(7));
-		
-		
+						
 		listOfNodes.get(3).setChanceOfDeath(1);
 		listOfNodes.get(4).setChanceOfDeath(1);
 		
-		//System.out.println(listOfNodes.size());
-		
-		for (Node n : listOfNodes){
-			n.printPath();
-			//System.out.println(listOfNodes.size());
-		}
-		
-		Human human1 = new Human();
-		human1.setCurrentNode(1);
-		listOfHumans.add(human1);	
 	}
 	
 	public void generateRandomGraph(int nodes, int branches){
