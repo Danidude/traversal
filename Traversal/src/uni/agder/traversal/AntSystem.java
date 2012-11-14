@@ -35,7 +35,7 @@ public class AntSystem {
 	/*
 	 * Get the current ant and the current node.
 	 * Get the nodes the ant can chose to move to from the 
-	 * current node.
+	 * current node, and only gets nodes it have not viseted before.
 	 * Use the pheromone values in each node combined
 	 * with alpha to calculate the different probabilities.
 	 * Make sure that the probability of all combined
@@ -43,18 +43,32 @@ public class AntSystem {
 	 * */
 	public boolean calculateTransitionProbabilities(Ant a){
 		int totalPheromones = 0;
-		int totalChanceOfPath = atractiveness * a.getCurrentNode().getPath().size();
+		ArrayList<Node> possiblePaths = new ArrayList<Node>();
+		
 		for(Node n : a.getCurrentNode().getPath())
 		{
-			totalPheromones += n.getAmountOfPheromones();
+			if(!a.getVisitedNodes().contains(n))
+			{
+				totalPheromones += n.getAmountOfPheromones();
+				possiblePaths.add(n);
+			}
+			
 		}
+		int totalChanceOfPath = atractiveness * possiblePaths.size();
 		int totalChance = totalChanceOfPath+totalPheromones;
+		
+		if(totalChance == 0)
+		{
+			if(a.getCurrentNode().isExit())
+				a.depositPheromones();
+			return false;
+		}
 		
 		/*Randomly selects a number of the total number of pheromones*/
 		int theChosenPathNumber = rand.nextInt(totalChance)+1;
 		
 		int i = atractiveness;
-		for(Node n: a.getCurrentNode().getPath())
+		for(Node n: possiblePaths)
 		{
 			if(theChosenPathNumber <= n.getAmountOfPheromones()+i)
 			{
