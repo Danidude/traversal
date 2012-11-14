@@ -6,19 +6,7 @@ public class Run {
 	static ArrayList<ArrayList<Integer>> solutions;
 	public static void main(String [ ] args)
 	{
-		/*Human human1 = new Human();
-		human1.setCurrentNode(1);
-		graph.addHuman(human1);
 		
-		graph.generateRandomGraph(50, 2);
-		solutions = bruteForce.bruteForceGraph(graph);
-		if(solutions == null)
-		{
-			System.err.println("System failure");
-		}
-		else
-			bruteForce.printSolutions(solutions);
-	*/
 		Bruteforce bruteForce = new Bruteforce();		
 		Graph graph = new Graph();
 		graph.generateRandomGraph(20, 2);
@@ -31,6 +19,6 @@ public class Run {
 		randomTraversal.randomTraversal(graph.getHumans(), graph.getNodes(), graph, 4, 4);
 		AntSystem antSys = new AntSystem(graph);
 		antSys.run();
-		
+
 	}
 }
