@@ -1,6 +1,7 @@
 package uni.agder.traversal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class AntSystem {
@@ -12,6 +13,9 @@ public class AntSystem {
 	/*Used to determine the chosen path*/
 	private int atractiveness = 200;
 	/*The starting proberbility for each path*/
+	private HashMap<Node, ArrayList<Node>> bestPathsForEachNode = new HashMap<Node, ArrayList<Node>>();
+	/*Used to contain the best path for each node*/
+	
 	Random rand;
 	
 	Graph graph;
@@ -57,10 +61,13 @@ public class AntSystem {
 		int totalChanceOfPath = atractiveness * possiblePaths.size();
 		int totalChance = totalChanceOfPath+totalPheromones;
 		
-		if(totalChance == 0)
+		if(totalChance == 0 || a.getCurrentNode().isExit())
 		{
 			if(a.getCurrentNode().isExit())
+			{
 				a.depositPheromones();
+			}
+				
 			return false;
 		}
 		
@@ -84,8 +91,7 @@ public class AntSystem {
 	public void run()
 	{
 		for (Node n : graph.getNodes())
-		{	
-			if(!n.isExit())
+		{
 			runAnts(n);
 		}
 	}
@@ -105,15 +111,35 @@ public class AntSystem {
 			Ant ant = new Ant(currentNode);
 			antGroup++;
 			boolean antMoving = true;
+			if(currentNode.getChanceOfDeath() < 1)
 			while(antMoving)
 			{
 				antMoving = calculateTransitionProbabilities(ant);
 			}
 			
-			if(bestRoute.size() == 0 || ant.getVisitedNodes().size() < bestRoute.size())
+			if((bestRoute.size() == 0 || ant.getVisitedNodes().size() < bestRoute.size()) && ant.getVisitedNodes().get(ant.getVisitedNodes().size()-1).isExit())
 			bestRoute = (ArrayList<Node>) ant.getVisitedNodes();
-			System.out.println("Delete this");
-				
+			bestPathsForEachNode.put(currentNode, bestRoute);
+		}
+		
+		//Prints the path, needs to be moved to Run.
+		
+	}
+	
+	public void printPathsFromNodes()
+	{
+		for(Node node : graph.getNodes())
+		{
+			System.out.print("Best way from node "+node.NodeID+" is: ");
+			if(bestPathsForEachNode.get(node).size() < 1)
+			{
+				System.out.print("There is no way from this node to an exit");
+			}
+			for(Node n: bestPathsForEachNode.get(node))
+			{
+				System.out.print(n.NodeID+" ");
+			}
+			System.out.println("");
 		}
 	}
 

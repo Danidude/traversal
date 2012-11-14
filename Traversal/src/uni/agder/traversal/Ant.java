@@ -40,6 +40,12 @@ public class Ant {
 			depositPheromones();
 			return false;
 		}
+		else if(node.getChanceOfDeath() > 0)
+		{
+			visitedNodes.add(node);
+			distanceTraveled++;
+			return false;
+		}
 		else{
 			visitedNodes.add(node);
 			distanceTraveled++;

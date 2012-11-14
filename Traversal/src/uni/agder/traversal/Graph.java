@@ -25,7 +25,7 @@ public class Graph {
 	
 	// Used to create specific graphs for testing purposes
 	@SuppressWarnings("unused")
-	private void generateTestCaseGraph(){
+	public void generateTestCaseGraph(){
 		for(int i = 0; i < 7; i++){
 			listOfNodes.add(createNode());
 		}
@@ -43,6 +43,7 @@ public class Graph {
 						
 		listOfNodes.get(3).setChanceOfDeath(1);
 		listOfNodes.get(4).setChanceOfDeath(1);
+		listOfNodes.get(6).setExit(true);
 		
 	}
 	
