@@ -46,14 +46,17 @@ public class Bruteforce {
 	private List<Human> listOfHumans = new ArrayList<Human>();
 	private boolean isFinished;
 	private Map<ArrayList<Integer>, Integer> solutionAndSurviebillity;
+	
 
 	public Map<ArrayList<Integer>, Integer>  bruteForceGraph(Graph graph){
 		listOfNodes = graph.getNodes();
 		listOfHumans = graph.getHumans();
 		solutionAndSurviebillity = new HashMap<ArrayList<Integer>, Integer>();
+		
+		
 		//printHumanStartingLocations();
 		//printNodeTypes();
-
+		
 		findStartNode(listOfNodes, listOfHumans);
 
 		/*solution = new ArrayList<Integer>();
@@ -255,6 +258,21 @@ public class Bruteforce {
 	public void printSolutions (ArrayList<ArrayList<Integer>> list){
 		int number = 1;
 		for(ArrayList<Integer> l : list){
+			System.out.print("Solution number "+number+": ");
+			number++;
+			for(int i : l){
+				System.out.print(" "+i);
+			}
+			System.out.println(".");
+		}
+	}
+	
+	/*
+	 * Prints out all the solutions bruteforce have created.
+	 */
+	public void printSolutions (){
+		int number = 1;
+		for(ArrayList<Integer> l : listOfSolutions){
 			System.out.print("Solution number "+number+": ");
 			number++;
 			for(int i : l){

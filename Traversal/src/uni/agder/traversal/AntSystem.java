@@ -142,5 +142,26 @@ public class AntSystem {
 			System.out.println("");
 		}
 	}
+	
+	public void printHowManySourvives()
+	{
+		int deaths = 0;
+		int sourvived = 0;
+		for(Node node : graph.getNodes())
+		{
+			for(Human human:graph.getHumans())
+			{
+				if(human.getStartPosition() == node.NodeID && bestPathsForEachNode.get(node).size() > 0)
+				{
+					sourvived++;
+				}
+				else if(human.getStartPosition() == node.NodeID && bestPathsForEachNode.get(node).size() <= 0)
+				{
+					deaths++;
+				}
+			}
+		}
+		System.out.println("In the Ant System "+deaths+" have died and "+sourvived+" have surived.");
+	}
 
 }

@@ -13,6 +13,7 @@ public class Human {
 	private Age age;
 	private Gender gender;
 	private int currentNode;
+	private int startNode;
 	public boolean hasPath;
 	
 	public Human(){
@@ -21,6 +22,16 @@ public class Human {
 		hasPath = false;
 	}
 	
+	public void setStartPosition(int i)
+	{
+		currentNode = i;
+		startNode = i;
+	}
+	
+	public int getStartPosition()
+	{
+		return startNode;
+	}
 	public void setCurrentNode(int i){
 		currentNode = i;
 	}
