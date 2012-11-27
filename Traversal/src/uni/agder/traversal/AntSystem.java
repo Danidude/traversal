@@ -15,6 +15,10 @@ public class AntSystem {
 	/*The starting proberbility for each path*/
 	private HashMap<Node, ArrayList<Node>> bestPathsForEachNode = new HashMap<Node, ArrayList<Node>>();
 	/*Used to contain the best path for each node*/
+	private HashMap<Integer, ArrayList<Integer>> listOfBruteForceSolutions = new HashMap<Integer, ArrayList<Integer>>();
+	/*Contains all the solutions form bruteforce*/
+	private HashMap<Node, Integer> howManyStepsToBeEqualBF = new HashMap<Node, Integer>();
+	/*Contains the number of ants that have run through the graph before they find the same route as bruteforce*/
 	
 	Random rand;
 	
@@ -25,6 +29,12 @@ public class AntSystem {
 		rand = new Random();
 	}
 	
+	public AntSystem(Graph graph, ArrayList<ArrayList<Integer>> list){
+		this.graph = graph;
+		rand = new Random();
+		
+	}
+	
 	/*
 	 * Diminish the amount of pheromones in each node 
 	 * based on the evaporation.
@@ -32,7 +42,7 @@ public class AntSystem {
 	public void updatePheromonTrail(){
 		for(Node n : graph.getNodes()){
 			
-			n.increasPheromones((int)((1-evaporation)*n.getAmountOfPheromones()));
+			n.setAmountOfPheromones((int)((1-evaporation)*n.getAmountOfPheromones()));
 		}
 	}
 	
@@ -93,6 +103,7 @@ public class AntSystem {
 		for (Node n : graph.getNodes())
 		{
 			runAnts(n);
+			graph.resetPheremones();
 		}
 	}
 	
@@ -102,11 +113,13 @@ public class AntSystem {
 	private void runAnts(Node currentNode)
 	{	ArrayList<Node> bestRoute = new ArrayList<Node>();
 		int antGroup = 0;
-		for (int i = 0; i<numberOfAnts; i++)
+		for (int i = 1; i<numberOfAnts; i++)
 		{
 			if(antGroup == 20)
 			{
 				updatePheromonTrail();
+				int abc = graph.getNodes().get(8).getAmountOfPheromones();
+				antGroup = 0;
 			}
 			Ant ant = new Ant(currentNode);
 			antGroup++;
@@ -116,14 +129,53 @@ public class AntSystem {
 			{
 				antMoving = calculateTransitionProbabilities(ant);
 			}
-			
+			boolean hasChanged = false;
 			if((bestRoute.size() == 0 || ant.getVisitedNodes().size() < bestRoute.size()) && ant.getVisitedNodes().get(ant.getVisitedNodes().size()-1).isExit())
-			bestRoute = (ArrayList<Node>) ant.getVisitedNodes();
+			{
+				bestRoute = (ArrayList<Node>) ant.getVisitedNodes();
+				hasChanged = true;
+			}
+			
+			
+			if(bestRoute.size() == listOfBruteForceSolutions.get(ant.getVisitedNodes().get(0).NodeID).size()-1 && hasChanged && bestRoute.size() > 1)
+				if(!howManyStepsToBeEqualBF.containsKey(ant.getVisitedNodes().get(0).NodeID))
+				{
+					howManyStepsToBeEqualBF.put(ant.getVisitedNodes().get(0), i);
+					//System.out.println("One added. "+ ant.getVisitedNodes().get(0).NodeID);
+				}
+					
+				
 			bestPathsForEachNode.put(currentNode, bestRoute);
 		}
 		
 		//Prints the path, needs to be moved to Run.
 		
+	}
+	
+	
+	public void addSetListOfSolutions(ArrayList<ArrayList<Integer>> list)
+	{
+		for(ArrayList<Integer> l : list)
+		{
+			listOfBruteForceSolutions.put(l.get(0), l);
+		}
+	}
+	
+	public Integer getAvrageHowManyAntsBeforeEqualBF()
+	{
+		int total = 0;
+		int howMany = 0;
+		for(Node n:graph.getNodes())
+		{
+			if(howManyStepsToBeEqualBF.containsKey(n))
+			{
+				howMany += howManyStepsToBeEqualBF.get(n);
+				total++;
+			}
+		}
+		if(total != 0)
+		howMany = howMany/total;
+		return howMany;
 	}
 	
 	public void printPathsFromNodes()
@@ -161,7 +213,7 @@ public class AntSystem {
 				}
 			}
 		}
-		System.out.println("In the Ant System "+deaths+" have died and "+sourvived+" have surived.");
+		System.out.println("In the Ant System "+deaths+" have died and "+sourvived+" have surived out of "+graph.getHumans().size());
 	}
 
 }

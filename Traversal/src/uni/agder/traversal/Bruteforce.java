@@ -45,10 +45,10 @@ public class Bruteforce {
 	private List<Node> listOfNodes = new ArrayList<Node>();
 	private List<Human> listOfHumans = new ArrayList<Human>();
 	private boolean isFinished;
-	private Map<ArrayList<Integer>, Integer> solutionAndSurviebillity;
+	private HashMap<ArrayList<Integer>, Integer> solutionAndSurviebillity;
 	
 
-	public Map<ArrayList<Integer>, Integer>  bruteForceGraph(Graph graph){
+	public HashMap<ArrayList<Integer>, Integer>  bruteForceGraph(Graph graph){
 		listOfNodes = graph.getNodes();
 		listOfHumans = graph.getHumans();
 		solutionAndSurviebillity = new HashMap<ArrayList<Integer>, Integer>();
@@ -57,7 +57,7 @@ public class Bruteforce {
 		//printHumanStartingLocations();
 		//printNodeTypes();
 		
-		findStartNode(listOfNodes, listOfHumans);
+		findStartNode();
 
 		/*solution = new ArrayList<Integer>();
 		solution.add(startNode.NodeID);
@@ -124,6 +124,18 @@ public class Bruteforce {
 		}
 
 	}
+	
+	
+	private void findStartNode()
+	{
+		for(Node n:listOfNodes)
+		{
+			solution = new ArrayList<Integer>();
+			solution.add(n.NodeID);
+			listOfSolutions.add(solution);
+		}
+	}
+	
 	/*
 	 * This goes trough all the solutions, checks if they ends with 0 or -1.
 	 * If not: Then it takes that list and runs nextStepInSolution.
@@ -317,6 +329,11 @@ public class Bruteforce {
 	private void printAsolution(ArrayList<Integer> list)
 	{
 		
+	}
+	
+	public ArrayList<ArrayList<Integer>> getListOfSolutions()
+	{
+		return listOfSolutions;
 	}
 
 	/*

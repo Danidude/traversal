@@ -139,6 +139,14 @@ public class Graph {
 			n.printPath();
 		}
 	}
+	
+	public void resetPheremones()
+	{
+		for(Node n: listOfNodes)
+		{
+			n.setAmountOfPheromones(0);
+		}
+	}
 }
 
 
