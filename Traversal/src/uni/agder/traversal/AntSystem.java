@@ -137,7 +137,7 @@ public class AntSystem {
 			}
 			
 			
-			if(bestRoute.size() == listOfBruteForceSolutions.get(ant.getVisitedNodes().get(0).NodeID).size()-1 && hasChanged && bestRoute.size() > 1)
+			if(bestRoute.size() == listOfBruteForceSolutions.get(ant.getVisitedNodes().get(0).NodeID).size()-1 && hasChanged && bestRoute.size() > 2)
 				if(!howManyStepsToBeEqualBF.containsKey(ant.getVisitedNodes().get(0).NodeID))
 				{
 					howManyStepsToBeEqualBF.put(ant.getVisitedNodes().get(0), i);
@@ -193,6 +193,27 @@ public class AntSystem {
 			}
 			System.out.println("");
 		}
+	}
+	
+	public int getSurivers()
+	{
+		int deaths = 0;
+		int sourvived = 0;
+		for(Node node : graph.getNodes())
+		{
+			for(Human human:graph.getHumans())
+			{
+				if(human.getStartPosition() == node.NodeID && bestPathsForEachNode.get(node).size() > 0)
+				{
+					sourvived++;
+				}
+				else if(human.getStartPosition() == node.NodeID && bestPathsForEachNode.get(node).size() <= 0)
+				{
+					deaths++;
+				}
+			}
+		}
+		return sourvived;
 	}
 	
 	public void printHowManySourvives()
