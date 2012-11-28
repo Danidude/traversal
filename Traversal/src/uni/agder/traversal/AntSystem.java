@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class AntSystem {
-	private int numberOfAnts = 1000;
+	private int numberOfAnts = 100;
 	/* Used to calculate the amount of pheromones that evaporate */
 	private double evaporation = 0.25;
 	/* Used to weigh the importance of the pheromone deposits */
@@ -24,9 +24,10 @@ public class AntSystem {
 	
 	Graph graph;
 	
-	public AntSystem(Graph graph){
+	public AntSystem(Graph graph, int numberOfAnts){
 		this.graph = graph;
 		rand = new Random();
+		this.numberOfAnts = numberOfAnts;
 	}
 	
 	public AntSystem(Graph graph, ArrayList<ArrayList<Integer>> list){
@@ -203,11 +204,15 @@ public class AntSystem {
 		{
 			for(Human human:graph.getHumans())
 			{
-				if(human.getStartPosition() == node.NodeID && bestPathsForEachNode.get(node).size() > 0)
+				if(human.getStartPosition() == node.NodeID && !bestPathsForEachNode.isEmpty() && bestPathsForEachNode.get(node).size() > 0)
 				{
 					sourvived++;
 				}
-				else if(human.getStartPosition() == node.NodeID && bestPathsForEachNode.get(node).size() <= 0)
+				else if(human.getStartPosition() == node.NodeID && !bestPathsForEachNode.isEmpty() && bestPathsForEachNode.get(node).size() <= 0)
+				{
+					deaths++;
+				}
+				else if(bestPathsForEachNode.isEmpty())
 				{
 					deaths++;
 				}

@@ -46,6 +46,7 @@ public class Bruteforce {
 	private List<Human> listOfHumans = new ArrayList<Human>();
 	private boolean isFinished;
 	private HashMap<ArrayList<Integer>, Integer> solutionAndSurviebillity;
+	private int survivers;
 	
 
 	public HashMap<ArrayList<Integer>, Integer>  bruteForceGraph(Graph graph){
@@ -323,12 +324,14 @@ public class Bruteforce {
 				}
 			}
 		}
+		
+		this.survivers = survivers;
 		System.out.println("In bruteforce "+survivers+" people survived out of "+listOfHumans.size());
 	}
 	
-	private void printAsolution(ArrayList<Integer> list)
+	public int getSurivers()
 	{
-		
+		return survivers;
 	}
 	
 	public ArrayList<ArrayList<Integer>> getListOfSolutions()
