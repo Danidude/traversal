@@ -1,11 +1,12 @@
 \chapter{Introduction}
 \label{ch:introduction}
 
-\section{Introduction}
+\section{Background}
 
-
-
-\section{Motivation}
+Pathfinding algorithms are used to find the quickest path between two points. 
+These algorithms are for instance used to solve mazes, scheduling a long trip in
+metro systems or wire routing. In our project we have looked at using pathfinding
+algorithms to find the safest route off a ship that is on fire.
 
 Every year people die in boating accidents, we hope that our work can be
 used to save lives. Jim Hall, the Chairman of the National Transportation 
@@ -22,14 +23,39 @@ receives proper guidance. For instance any message played over a sound system co
 difficult to hear during a panic and passengers could be in rooms or corridors
 where they would be unrachable for the employees.
 
-\section{Goal}
+\section{Problem Statement}
 
-\subsection{Field of research}
+Morten Goodwin from the University of Agder proposed a project about finding a safe route
+to evacuate passengers in crisis situations. As there are a multitude of pathfinding algorithms
+we chose to focus on exploring the validity of a single algorithm called Ant Colony Optimization 
+(ACO). We chose this algorithm since we believed the nature of the algorithm made it a perfect
+candidate in a dynamic environment. Our goal was to create a testing environment in which 
+we would run the ACO algorithm and then evaluate its performance.
 
-\section{Statement of the Problem}
+To reach the project goal within the deadline some limitations were set. Firstly, the simulations did not use 
+any real data. Secondly, the graphs were completely randomly generated and the graphs did not resemble
+any ships or their actual structure. Thirdly, all rooms were equally easy to traverse. There were no efforts
+to simulate actual human behavior during a crisis.
 
-\section{Contributions}
- 
-\section{Target audience}
+Additionally we made several assumptions. Firstly, we asumed that a ship could be sufficently modeled
+as a graph. Secondly, everyone on the ship had access to a smart phone with an application that ran our
+algorithms and they followed the directions perfectly. Finally, all passengers act the same and move at
+the same speed.
+
+\section{Solution Approach}
+
+Normally, pathfinding algorithms finds the quickest path from a location to an 
+exit. However in our case certain sections of the ship could be dangerous and the algorithms 
+had to find alternate routes, valuing safety over speed. The ships were modeled as undirected
+graphs with nodes and vertices. The nodes represented any type of room, including
+hallways, stairs etc., and a vertex between two nodes indicated that it was possible to
+cross over from one to the other.
+
+ACO attempts to find the optimal route through the ship by mimicking the behavior of ants and ant colonies. 
+The performance of the algorithm was tested by creating random graphs with a specific amount of
+passengers in them. We would then run ACO multiple times and compare its performance against
+random behavior and perfect behavior. In the case of random behavior the passengers would randomly
+walk until they either died or found the exit. And to simulate perfect behavior we found every possible
+path for every passenger and chose the best one.
 
 \section{Report outline}
