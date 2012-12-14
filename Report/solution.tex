@@ -1,24 +1,31 @@
 \chapter{Proposed Solution}
 \label{ch:solution}
-Approx. 10 pages
-
-\section{Proposed solution / algorithm}
-
-\subsection{The basic algorithm}
-
-\subsection{Discussion of design issues}
+%Approx. 10 pages
 
 
-\subsection{Algorithmic Enhancements}
+\section{Implementation}
+
+In this project we created a structure to make any graph we wanted, and also create randomly made graphs. Each node in the graph represents a room onboard a ship. Also when creating connections to a node from another node, it was never one way connection. Reason for this is that you may walk through a door both ways. We had several different algorithms trying to find the best way for the humans aboard the ship to find their way to an node that was an exit. Bruteforce, random and AntSystem was the algorithm we used. We started with Bruteforce, finding every single way from a node to an exit, and how deadly each way was. After we ran random to see how good it performed in the same situation. After both of these are done, we ran the AntSystem, and used Bruteforce and random as comperisent.
+
+AntSystem works in the way that we run “ants” through the graph. In the beginning it is random, however as more and more ants find and exit, a path develops. As most animals, they take the shortest and most efficient way as more and more ants run through the graph. This is done by something called pheromones. When an ant find an exit, it drops pheromones in all the visited nodes in the graph. The more nodes, the less in each, thus the shortest route to an exit will get the most pheromones. The ants coming after will be more attracted to the nodes with more pheromones and are more likely to visit them. This will create the path to an node with an exit. If an ant should visit a node that is deadly, it will not spread its pheromones as it is dead.
+
+%\section{Proposed solution / algorithm}
+
+%\subsection{The basic algorithm}
+
+%\subsection{Discussion of design issues}
 
 
-\subsection{Discussion of the Parameter Space}
+%\subsection{Algorithmic Enhancements}
 
 
-\section{Prototype}
+%\subsection{Discussion of the Parameter Space}
 
-\section{Justification of Claim to Originality}
 
-\section{Valuation of Contribution}
+%\section{Prototype}
 
-\section{Alternatives}
+%\section{Justification of Claim to Originality}
+
+%\section{Valuation of Contribution}
+
+%\section{Alternatives}

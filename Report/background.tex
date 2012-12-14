@@ -1,5 +1,17 @@
-\chapter{Background}
+\chapter{State of the art}
 \label{ch:background}
+
+\section{Ant Colony Optimization}
+
+Ant Colony Optimization(ACO) have been around for quite some time, and there are sevral different applications this algoritm can be used for, for example routing, scheduling, subset and machine learning[1]. The offical website to ACO is www.aco-metaheuristic.org. There are several different ACO systems that have been developed, two of the most successful are MAX-MIN Ant system and Ant Colony system.
+
+In the orignial Ant system, each iteration runs m ants through the different paths/graph, and creates a solution. When all the m ants have finished, the update to pheromones happens to the solution the ants have found. Then the algorithm starts the next iteration with the next m ants.
+
+MAX-MIN Ant system is an improvement to the original in the way that only the best solution is updated or best so far.
+
+Ant Colony system uses “local pheromones” and “offline pheromones” in finding the best solution to the problem. The local pheromones are used to update each location so that the other ants that follows are less likely to take the same path as him, and thus creating several different solutions in the iteration. When the iteration is done, the offline pheromones are updated to the best solution making it more likely to select this one in the future.
+
+%[1] - Ant Colony Optimization By Marco Dorigo and Thomas Stützle. US 55 Hayward Street, Cambridge, MA 02142-1315 USA. June 2004   http://mitpress.mit.edu/books/ant-colony-optimization
 
 \section{Sample stuff}
 Some simple and useful latex formatting.

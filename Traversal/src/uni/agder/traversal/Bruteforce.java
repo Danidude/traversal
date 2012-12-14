@@ -75,13 +75,17 @@ public class Bruteforce {
 
 	private void solutionLoop(){
 		isFinished = false;
+		
 		while (!isFinished){
 			isAtEnd(listOfSolutions);
 			tempListOfSolutions = new ArrayList<ArrayList<Integer>>();
 			bruteForceStep(listOfSolutions);
-			listOfSolutions.clear();
+			
+			listOfSolutions = new ArrayList<ArrayList<Integer>>();
+			
 			listOfSolutions.addAll(tempListOfSolutions);
 			isFinished = isDone(listOfSolutions);
+			System.gc();
 
 		}
 	}
@@ -239,6 +243,7 @@ public class Bruteforce {
 				if(l.get(l.size()-1) == n.NodeID && n.isExit()){
 					l.add(-1);
 					setHumanHasPath(l);
+					setHasPath(l);
 
 				}
 			}
@@ -326,7 +331,7 @@ public class Bruteforce {
 		}
 		
 		this.survivers = survivers;
-		System.out.println("In bruteforce "+survivers+" people survived out of "+listOfHumans.size());
+		//System.out.println("In bruteforce "+survivers+" people survived out of "+listOfHumans.size());
 	}
 	
 	public int getSurivers()
@@ -338,6 +343,18 @@ public class Bruteforce {
 	{
 		return listOfSolutions;
 	}
+	
+	private void setHasPath(ArrayList<Integer> list)
+	{
+		for(Node n:listOfNodes)
+		{
+			if(n.NodeID == list.get(0))
+			{
+				n.hasWayToExit = true;
+			}
+		}
+		
+	}
 
 	/*
 	 * Sets the hasPath on humans, so that the random knows that this human do have a valid way to get to an exit.
@@ -348,6 +365,16 @@ public class Bruteforce {
 				h.hasPath = true;
 			}
 		}
+	}
+	
+	public void clearAll()
+	{
+		listOfSolutions.clear();
+		solution.clear();
+		tempListOfSolutions.clear();
+		listOfSolutions.trimToSize();
+		solution.trimToSize();
+		tempListOfSolutions.trimToSize();
 	}
 
 	public Bruteforce(){

@@ -5,12 +5,14 @@ import java.util.List;
 
 public class Ant {
 	private List<Node> visitedNodes;
+	private List<Node> updateOnlyOnceOnEachNode;
 	private int distanceTraveled;
 	private int totalPheromones = 100;
 	private Node currentNode;
 
 	public Ant(Node start){
 		distanceTraveled = 0;
+		updateOnlyOnceOnEachNode = new ArrayList<Node>();
 		visitedNodes = new ArrayList<Node>();
 		visitedNodes.add(start);
 	}
@@ -30,7 +32,7 @@ public class Ant {
 
 	public void depositPheromones(){
 		int partialPheromones = totalPheromones/visitedNodes.size();
-		for(Node n : visitedNodes){
+		for(Node n : updateOnlyOnceOnEachNode){
 			n.increasPheromones(partialPheromones);
 		}
 	}
@@ -42,11 +44,19 @@ public class Ant {
 		}
 		else if(node.getChanceOfDeath() > 0)
 		{
+			if(!updateOnlyOnceOnEachNode.contains(node))
+			{
+				updateOnlyOnceOnEachNode.add(node);
+			}
 			visitedNodes.add(node);
 			distanceTraveled++;
 			return false;
 		}
 		else{
+			if(!updateOnlyOnceOnEachNode.contains(node))
+			{
+				updateOnlyOnceOnEachNode.add(node);
+			}
 			visitedNodes.add(node);
 			distanceTraveled++;
 			return true;

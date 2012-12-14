@@ -1,5 +1,6 @@
 package uni.agder.traversal;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -7,6 +8,7 @@ public class RandomTraversal {
 
 	Random random = new Random();
 	int survivors = 0;
+
 
 	/*
 	 * First takes all the humans in the list of humans and places them in random positions in the 
@@ -18,6 +20,7 @@ public class RandomTraversal {
 	 */
 	public void randomTraversal(List<Human> listOfHumans, List<Node> listOfNodes, Graph graph, int exits, int lethalNodes){
 		for(Human h : listOfHumans){
+			h.setCurrentNode(h.getStartPosition());
 			if(h.hasPath){
 				while(listOfNodes.get(h.getCurrentNode()).getChanceOfDeath() == 0){
 					if(listOfNodes.get(h.getCurrentNode()).isExit()){
@@ -26,6 +29,7 @@ public class RandomTraversal {
 					}
 					int choice = random.nextInt(listOfNodes.get(h.getCurrentNode()).getPath().size());
 					int path = listOfNodes.get(h.getCurrentNode()).getPath().get(choice).NodeID;
+					
 					h.setCurrentNode(path);
 					if(listOfNodes.get(h.getCurrentNode()).getChanceOfDeath() == 1){
 						break;
@@ -34,12 +38,14 @@ public class RandomTraversal {
 			}
 			else{
 			}
+			
 		}
 		//System.out.println("Random have: Survivors: " + survivors);
 	} 
 	
 	public int getSurvives()
 	{
+		
 		return survivors;
 	}
 }

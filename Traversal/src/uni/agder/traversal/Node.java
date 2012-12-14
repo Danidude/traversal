@@ -18,6 +18,7 @@ public class Node {
 	public int NodeID;	
 	private boolean isExit;
 	private int amountOfPheromones;
+	public boolean hasWayToExit = false;
 
 	public Node(int ID){
 		this.NodeID = ID;

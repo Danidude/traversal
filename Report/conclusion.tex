@@ -4,6 +4,12 @@
 
 \section{Summary of Results}
 
+As mention in the implementation, in this report we measure the AntSystem based on how well it did towards Burteforce as optimal and random as the worst, or it may even do worse than this. We used a graph that our “veilder”, Morten Goodwin presented to us, and tested our different algorithms in it. In this graph, there was 8 nodes, 1 exit and 2 lethal nodes. The exit was always the same, however the lethal nodes was randomized with each experiment. We also placed 20 humans randomly in the graph. This may create it so that humans are placed inside a lethal node, and die right away.
+
+With bruteforce, all humans that did not start within a lethal node and that also had a path to an exit did survive as expected. In random, on average below half of the humans survived that survived in bruteforce. This greatly depend on what nodes was lethal and where humans started.
+
+However in Antsystem, all the humans that survived using bruteforce, also survived using AntSystem to find an exit.
+
 \section{Conclusion}
 \emph{``My conclusion offers a compelling final comment to my argument, one that is persuasive for my
 intended audience.''}

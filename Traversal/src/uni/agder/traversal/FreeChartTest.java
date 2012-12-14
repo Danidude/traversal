@@ -1,12 +1,17 @@
 package uni.agder.traversal;
-import java.util.ArrayList;
+import java.awt.BasicStroke;
+import java.awt.Polygon;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.DefaultDrawingSupplier;
+import org.jfree.chart.plot.DrawingSupplier;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -43,15 +48,15 @@ public class FreeChartTest {
 		
 	}
 	
-	public void createLineChartFromSurivers(HashMap<Integer, Integer> antSystemSurivers, HashMap<Integer, Integer> randomSurivers, int bruteForceSurvivers, int numberOfTimesteps)
+	public void createLineChartFromSurivers(HashMap<Integer, Integer> antSystemSurvivors, HashMap<Integer, Integer> randomSurvivors, HashMap<Integer, Integer> bruteForceSurvivors, int numberOfTimesteps)
 	{
-		XYSeries antSystem = new XYSeries("AntSystem Survivers");
-		XYSeries random = new XYSeries("Random Survivers");
-		XYSeries bruteForce = new XYSeries("BruteForce Survivers");
+		XYSeries antSystem = new XYSeries("Ant Colony Optimization");
+		XYSeries random = new XYSeries("Random");
+		XYSeries bruteForce = new XYSeries("Brute force");
 		
-		addNumbersToSeries(antSystem, antSystemSurivers, numberOfTimesteps);
-		addNumbersToSeries(random, randomSurivers, numberOfTimesteps);
-		addNumbersToSeries(bruteForce, bruteForceSurvivers, numberOfTimesteps);
+		addNumbersToSeries(antSystem, antSystemSurvivors, numberOfTimesteps);
+		addNumbersToSeries(random, randomSurvivors, numberOfTimesteps);
+		addNumbersToSeries(bruteForce, bruteForceSurvivors, numberOfTimesteps);
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		
@@ -59,7 +64,56 @@ public class FreeChartTest {
 		dataset.addSeries(random);
 		dataset.addSeries(antSystem);
 		
-		JFreeChart chart = ChartFactory.createXYLineChart("Surivers", "Ants", "Survivers", dataset, PlotOrientation.VERTICAL, true, true, false);
+		
+		
+		JFreeChart chart = ChartFactory.createXYLineChart("Survivors", "Ants", "Survivors", dataset, PlotOrientation.VERTICAL, true, true, false);
+		
+		
+      /*  final Shape[] shapes = new Shape[3];
+        int[] xpoints;
+        int[] ypoints;
+
+        // right-pointing triangle
+        xpoints = new int[] {-3, 3, -3};
+        ypoints = new int[] {-3, 0, 3};
+        shapes[0] = new Polygon(xpoints, ypoints, 3);
+
+        // vertical rectangle
+        shapes[1] = new Rectangle2D.Double(-2, -3, 3, 6);
+
+        // left-pointing triangle
+        xpoints = new int[] {-3, 3, 3};
+        ypoints = new int[] {0, -3, 3};
+        shapes[2] = new Polygon(xpoints, ypoints, 3);
+		
+		
+		final DrawingSupplier supplier = new DefaultDrawingSupplier(
+	            DefaultDrawingSupplier.DEFAULT_PAINT_SEQUENCE,
+	            DefaultDrawingSupplier.DEFAULT_OUTLINE_PAINT_SEQUENCE,
+	            DefaultDrawingSupplier.DEFAULT_STROKE_SEQUENCE,
+	            DefaultDrawingSupplier.DEFAULT_OUTLINE_STROKE_SEQUENCE,
+	            shapes
+	        );
+		
+		CategoryPlot plot = (CategoryPlot) chart.getPlot();
+		
+		plot.setDrawingSupplier(supplier);
+
+		plot.getRenderer().setSeriesStroke(
+	            0, 
+	            new BasicStroke(
+	                2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 
+	                1.0f, new float[] {10.0f, 6.0f}, 0.0f
+	            )
+	        );
+		plot.getRenderer().setSeriesStroke(
+	            1, 
+	            new BasicStroke(
+	                2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 
+	                1.0f, new float[] {10.0f, 6.0f}, 0.0f
+	            )
+	        );*/
+		
 		
 		ChartFrame frame = new ChartFrame("Data", chart);
 		frame.pack();

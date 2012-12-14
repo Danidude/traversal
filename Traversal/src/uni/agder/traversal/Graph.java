@@ -10,6 +10,7 @@ public class Graph {
 
 	private List<Human> listOfHumans = new ArrayList<Human>();
 	private List<Node> listOfNodes = new ArrayList<Node>();
+	private List<Node> listOfLethalNodes = new ArrayList<Node>();
 	private int nodeID = 0;
 	Random random = new Random();
 	
@@ -78,6 +79,7 @@ public class Graph {
 	}
 	
 	public void generateRandomHumans(int number){
+		listOfHumans = new ArrayList<Human>();
 		for(int i = 0; i < number; i++){
 			Human human = new Human();
 			listOfHumans.add(human);
@@ -117,6 +119,29 @@ public class Graph {
 			int lethal = random.nextInt(listOfNodes.size());
 			if(!listOfNodes.get(lethal).isExit() && listOfNodes.get(lethal).getChanceOfDeath() == 0){
 				listOfNodes.get(lethal).setChanceOfDeath(1);
+				listOfLethalNodes.add(listOfNodes.get(lethal));
+				
+				counter++;
+			}
+		}
+	}
+	
+	public void changeLeathalNdes(int numberOfLeathalNodes)
+	{
+		if(!listOfLethalNodes.isEmpty())
+		{
+			for(Node n: listOfLethalNodes)
+			{
+				n.setChanceOfDeath(0);
+			}
+		}
+		listOfLethalNodes = new ArrayList<Node>();
+		int counter = 1;
+		while(counter <= numberOfLeathalNodes){
+			int lethal = random.nextInt(listOfNodes.size());
+			if(!listOfNodes.get(lethal).isExit() && listOfNodes.get(lethal).getChanceOfDeath() == 0){
+				listOfNodes.get(lethal).setChanceOfDeath(1);
+				listOfLethalNodes.add(listOfNodes.get(lethal));
 				
 				counter++;
 			}

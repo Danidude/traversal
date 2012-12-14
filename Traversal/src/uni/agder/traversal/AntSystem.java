@@ -62,11 +62,8 @@ public class AntSystem {
 		
 		for(Node n : a.getCurrentNode().getPath())
 		{
-			if(!a.getVisitedNodes().contains(n))
-			{
 				totalPheromones += n.getAmountOfPheromones();
 				possiblePaths.add(n);
-			}
 			
 		}
 		int totalChanceOfPath = atractiveness * possiblePaths.size();
@@ -102,9 +99,12 @@ public class AntSystem {
 	public void run()
 	{
 		for (Node n : graph.getNodes())
-		{
-			runAnts(n);
-			graph.resetPheremones();
+		{	
+			if(n.hasWayToExit)
+			{
+				runAnts(n);
+			}
+			
 		}
 	}
 	
@@ -131,19 +131,19 @@ public class AntSystem {
 				antMoving = calculateTransitionProbabilities(ant);
 			}
 			boolean hasChanged = false;
-			if((bestRoute.size() == 0 || ant.getVisitedNodes().size() < bestRoute.size()) && ant.getVisitedNodes().get(ant.getVisitedNodes().size()-1).isExit())
+			if((bestRoute.isEmpty() || ant.getVisitedNodes().size() <= bestRoute.size()) && ant.getVisitedNodes().get(ant.getVisitedNodes().size()-1).isExit())
 			{
 				bestRoute = (ArrayList<Node>) ant.getVisitedNodes();
 				hasChanged = true;
 			}
 			
 			
-			if(bestRoute.size() == listOfBruteForceSolutions.get(ant.getVisitedNodes().get(0).NodeID).size()-1 && hasChanged && bestRoute.size() > 2)
+			/*if(bestRoute.size() == listOfBruteForceSolutions.get(ant.getVisitedNodes().get(0).NodeID).size()-1 && hasChanged && bestRoute.size() > 2)
 				if(!howManyStepsToBeEqualBF.containsKey(ant.getVisitedNodes().get(0).NodeID))
 				{
 					howManyStepsToBeEqualBF.put(ant.getVisitedNodes().get(0), i);
 					//System.out.println("One added. "+ ant.getVisitedNodes().get(0).NodeID);
-				}
+				}*/
 					
 				
 			bestPathsForEachNode.put(currentNode, bestRoute);
@@ -198,26 +198,48 @@ public class AntSystem {
 	
 	public int getSurivers()
 	{
+		updatePheromonTrail();
+		//graph.resetPheremones();
 		int deaths = 0;
 		int sourvived = 0;
+		ArrayList<Human> humansWithOutAPath = new ArrayList<Human>();
 		for(Node node : graph.getNodes())
 		{
 			for(Human human:graph.getHumans())
 			{
+				
+				/*if(human.getStartPosition() == node.NodeID && bestPathsForEachNode.containsKey(node))
+				{
+					sourvived++;
+				}
+				else if(!bestPathsForEachNode.containsKey(node) && human.getStartPosition() == node.NodeID)
+				{
+					humansWithOutAPath.add(human);
+				}*/
+				
+				
 				if(human.getStartPosition() == node.NodeID && !bestPathsForEachNode.isEmpty() && bestPathsForEachNode.get(node).size() > 0)
 				{
 					sourvived++;
 				}
-				else if(human.getStartPosition() == node.NodeID && !bestPathsForEachNode.isEmpty() && bestPathsForEachNode.get(node).size() <= 0)
+				else if(human.getStartPosition() == node.NodeID && !bestPathsForEachNode.containsKey(node))
 				{
-					deaths++;
+					humansWithOutAPath.add(human);
 				}
 				else if(bestPathsForEachNode.isEmpty())
 				{
-					deaths++;
+					//humansWithOutAPath.add(human);
 				}
 			}
 		}
+		if(!humansWithOutAPath.isEmpty())
+			{
+				RandomTraversal rt = new RandomTraversal();
+				rt.randomTraversal(humansWithOutAPath, graph.getNodes(), graph, 0, 0);
+				sourvived += rt.getSurvives();
+			}
+		
+		//System.out.println(sourvived);
 		return sourvived;
 	}
 	
