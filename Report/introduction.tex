@@ -8,11 +8,11 @@ These algorithms are for instance used to solve mazes, scheduling a long trip in
 metro systems or wire routing. In our project we have looked at using pathfinding
 algorithms to find the safest route off a ship that is on fire.
 
-Every year people die in boating accidents, we hope that our work can be
+Every year people die in boating accidents and we hope that our work can be
 used to save lives. Jim Hall, the Chairman of the National Transportation 
 Safety Board testified in front of the Subcommittee on Coast Guard and Maritime 
 Transportation, making several safety recomendations after the Scandinavian Star
-accident. One of them were to "Improve crew language/communication 
+accident \cite{ntsb}. One of them were to "Improve crew language/communication 
 ability to assist passengers during emergencies." Our work, which will be part of a system
 that provides passengers with the quickest route to the exit, could output 
 any directions in the language of the phone owner. This would not only improve 
@@ -34,12 +34,13 @@ we would run the ACO algorithm and then evaluate its performance.
 
 To reach the project goal within the deadline some limitations were set. Firstly, the simulations did not use 
 any real data. Secondly, the graphs were completely randomly generated and the graphs did not resemble
-any ships or their actual structure. Thirdly, all rooms were equally easy to traverse. There were no efforts
-to simulate actual human behavior during a crisis.
+any ships or their actual structure. Thirdly, all rooms were equally easy to traverse and had unlimited capasity. 
+Finally, there were no efforts to simulate actual human behavior during a crisis and all passengers followed
+any directions perfectly.
 
 Additionally we made several assumptions. Firstly, we asumed that a ship could be sufficently modeled
 as a graph. Secondly, everyone on the ship had access to a smart phone with an application that ran our
-algorithms and they followed the directions perfectly. Finally, all passengers act the same and move at
+algorithms and they followed the directions perfectly. Finally, all passengers acted the same and moved at
 the same speed.
 
 \section{Solution Approach}
