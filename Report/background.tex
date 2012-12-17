@@ -11,7 +11,7 @@ While returning to its colony it leaves a trail of pheromones which will attract
 the same path as the initial ant, strengthen the pheromone trail and further increase the possibility that more ants will
 take this path to the food source.
 
-While the pheromone trail increases the probability that an ant choses to follow the trail, it does not ensure it.
+While the pheromone trail increases the probability that an ant chooses to follow the trail, it does not ensure it.
 If several ants reaches the same food source by walking different paths the shortest path will be made the more attractive
 one over time. This is a result of pheromone deposits. The shortest path will have the highest pheromone density as more
 pheromones can be deposited on the shorter route, the resulting higher pheromone density will increase the possibility that 
@@ -22,25 +22,55 @@ If the pheromones did not evaporate the path followed by a certain amount of ini
 would quickly become the only path any ant followed as the pheromone density would increase to the point that no other paths
 could ever become more attractive, even if they were the more optimal paths. 
 
-Additionally, pheromone evaporation makes ACO able to adapt to changes. A path can be the optimal path for a while, untill a change
-occurs that makes the path unusable. If the pheromones did not evaporate the ants would continue to follow this path indefinately,
+Additionally, pheromone evaporation makes ACO able to adapt to changes. A path can be the optimal path for a while, until a change
+occurs that makes the path unusable. If the pheromones did not evaporate the ants would continue to follow this path indefinitely,
 never reaching the food source again. However, when the ants are not able to reach the food source they will not deposit any
 pheromones and as the pheromones deposited by previous ants evaporates the ants will will be less attracted to the old path
 and start exploring new ones.
 
-For the algorithm itself there are two parts, edge selection and pheromone update. Edge selection is the process of choosing
-which way to go. Every ant $s$ has a probability $P^k_{ab}$ of moving from location $a$ to location $b$. The probability
-is calculated based on the attractiveness $\Lambda_{ab}$  of moving from $a$ to $b$ and the pheromone trail level $T_{ab}$.
-
+\begin{figure}[h]
+\centering
 \begin{math}
-P^k_{ab} = {(T^\alpha_{ab})(\Lambda^\beta_{ab}) \over \sum (T^\alpha_{ab})(\Lambda^\beta_{ab})}
+P^s_{ab} = {(T^\alpha_{ab})(\Lambda^\beta_{ab}) \over \sum (T^\alpha_{ab})(\Lambda^\beta_{ab})}
 \end{math}
+\caption{\textit{The mathematical formula for edge selection}}
+\label{fig:edge}
+\end{figure}
 
+For the algorithm itself there are two parts, edge selection, as seen in figure \ref{fig:edge}, and pheromone update, as seen in figure \ref{fig:update}. 
+Edge selection, simply stated, is the process of choosing which way to go. Every ant $s$ has a probability $P^s_{ab}$ of moving from location $a$ to location $b$. The probability
+is calculated based on the attractiveness $\Lambda_{ab}$  of moving from $a$ to $b$ and the pheromone trail level $T_{ab}$. The trail level,
+as discussed above, signifies how rewarding that path has been in the past. The attractiveness of a move indicates the cost of the move and 
+will in the beginning of the simmulation have a large impact on the choices made by the ants. However over time the pheromone trail level will take over as the
+dominating factor.
 
-
+\begin{figure}[h]
+\centering
 \begin{math}
-T_{ab} \leftarrow (1 - \rho)T_{ab} + \sum_k \Delta T^k_{ab}
+T_{ab} \leftarrow (1 - \rho)T_{ab} + \sum \limits_{s} \Delta T^s_{ab}
 \end{math}
+\caption{\textit{The mathematical formula for pheromone update}}
+\label{fig:update}
+\end{figure}
+
+When the ants have returned, the pheromone trail is updated. The pheromone trail level $T_{ab}$ is reduced by a pheromone evaporation
+coefficient $\rho$. A higher coefficient results in higher evaporation and fast adaptation and visa versa. Nevertheless this does not mean
+that the factor should always be high as ACO is probabilistic and fast adaptation could result in the optimal path being found and then lost
+again before other ants had time to travel it. Finally, $\sum \limits_{s} \Delta T^s_{ab}$ is the amount of pheromones ant number $s$ will deposit on
+the trail. The amount deposited is typically decided by taking a constant $I$ divided by the length of ant $s$ path $J_s$
+
+\begin{figure}[h]
+\centering
+\begin{math}
+\Delta \tau^{s}_{ab} =
+\begin{cases}
+I/J_s & \mbox{if ant }s\mbox{ uses edge }ab\mbox{ in its path} \\
+0 & \mbox{otherwise}
+\end{cases}
+\end{math}
+\caption{\textit{The mathematical formula used to calculate the amount of pheromones that should be deposited}}
+\label{fig:update}
+\end{figure}
 
 
 
@@ -48,14 +78,6 @@ T_{ab} \leftarrow (1 - \rho)T_{ab} + \sum_k \Delta T^k_{ab}
 
 
 
-
-
-
-%In the original Ant system, each iteration runs m ants through the different paths/graph, and creates a solution. When all the m ants have finished, the update to pheromones happens to the %solution the ants have found. Then the algorithm starts the next iteration with the next m ants.
-
-%MAX-MIN Ant system is an improvement to the original in the way that only the best solution is updated or best so far.
-
-%Ant Colony system uses “local pheromones” and “offline pheromones” in finding the best solution to the problem. The local pheromones are used to update each location so that the other ants %that follows are less likely to take the same path as him, and thus creating several different solutions in the iteration. When the iteration is done, the offline pheromones are updated to the %best solution making it more likely to select this one in the future.
 
 
 
