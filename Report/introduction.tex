@@ -25,19 +25,22 @@ where they would be unrachable for the employees.
 
 \section{Problem Statement}
 
-Morten Goodwin from the University of Agder proposed a project about finding a safe route
+In this project we set out to find a safe route
 to evacuate passengers in crisis situations. As there are a multitude of pathfinding algorithms
 we chose to focus on exploring the validity of a single algorithm called Ant Colony Optimization 
 (ACO). We chose this algorithm since we believed the nature of the algorithm made it a perfect
-candidate in a dynamic environment. Our goal was to create a testing environment in which 
-we would run the ACO algorithm and then evaluate its performance.
+candidate in a dynamic environment. Thus, our goal was to use ACO to find safe passage for each passenger
+in a crisis situation. To achive this we needed to create a testing environment in which 
+we would run the ACO algorithm and then evaluate its performance. 
 
+\subsection{Limitations}
 To reach the project goal within the deadline some limitations were set. Firstly, the simulations did not use 
 any real data. Secondly, the graphs were completely randomly generated and the graphs did not resemble
 any ships or their actual structure. Thirdly, all rooms were equally easy to traverse and had unlimited capasity. 
 Finally, there were no efforts to simulate actual human behavior during a crisis and all passengers followed
 any directions perfectly.
 
+\subsection{Assumptions}
 Additionally we made several assumptions. Firstly, we asumed that a ship could be sufficently modeled
 as a graph. Secondly, everyone on the ship had access to a smart phone with an application that ran our
 algorithms and they followed the directions perfectly. Finally, all passengers acted the same and moved at
