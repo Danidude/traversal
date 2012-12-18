@@ -7,10 +7,18 @@
 \section{Conclusion}
 %\emph{``My conclusion offers a compelling final comment to my argument, one that is persuasive for my
 %intended audience.''}
-Ant Colony Optimization(ACO) is just as good as brute force as long as there are enough ants building the path for the system. It is also more cost effective on taking up resources on the system it is running on, as brute force need a lot of resources and ACO not. When the graphs gets bigger, you need more ants to be sure that you get the right paths to save most people, tho it is not a huge increase when creating bigger graphs.
+Ant Colony Optimization(ACO) might preform just as good as brute force as long as it uses enough ants to find its solutions. This varies from graph and how many lethal nodes the graph contains. The more lethal nodes the graph contains, the more ants are needed on average for ACO to figure out the best paths for the humans. The size on the graph also impact how many ants are needed for ACO, however this will be a static number rather then a increasing one for the lethal nodes. 
+
+As graphs gets bigger, not only do ACO need more time to solve the problem, brute force also need more time and resources to be able to solve this. As this algorithm is meant to be able to run on smart phones, we need to use as little resources as possible. Also according to evacuation plans on board ships, passengers need to be ready to board the lifeboats within 30 minutes, therefore the algorithm needs to be able to solve this problem within a short time period and handle change that occurs within this time period.
+
+Therefore is ACO a vial algorithm to use, as it faster then brute force and needs to be. It also may achieve the same results as brute force given enough ants to create its solutions.
 
 
 \section{Contributions}
 List of contributions to new knowledge
 
 \section{Further Work}
+
+For future work is to improve our Ant Colony Optimization algorithm to preform better, as there are room for improvements. It needs to be able to handle different levels of lethality in paths it finds and spread the pheromones accordantly. Also measure the performance of this algorithm up towards other conventional algorithms, for example Dijkstra's.
+
+The environment in this project is static, and is ether created randomly or to small for a ship. So there is a need to create a graph that is on the same size as a ship and have the hazards on board the ship to behave as they do in real life. At the moment the hazards are static and stays in the same place at all times unless we randomly creates new ones. Also hazards may be damaging and not lethal always, and this is not implemented, as smoke from a fire might not kill people straight away, however long exposure will be lethal.
