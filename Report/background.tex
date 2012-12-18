@@ -3,13 +3,81 @@
 
 \section{Ant Colony Optimization}
 
-Ant Colony Optimization(ACO) have been around for quite some time, and there are several different applications this algorithm can be used for, for example routing, scheduling, subset and machine learning. There are several different ACO systems that have been developed, two of the most successful are MAX-MIN Ant system and Ant Colony system.
+The Ant Colony Optimization(ACO) algorithm is a probabilistic algorithm that have been used in routing, scheduling, 
+subset and machine learning. It was created by Marco Dorigo in 1992 to find an optimal path in a graph, mimicking the
+behavior of ant which are searching for food \cite{aco}. In nature, when searching for food, ants walk randomly until
+they locate a food source. When an ant stumble upon food it returns to the ant colony, taking the shortest path possible.
+While returning to its colony it leaves a trail of pheromones which will attract other ants. These other ants will, by walking
+the same path as the initial ant, strengthen the pheromone trail and further increase the possibility that more ants will
+take this path to the food source.
 
-In the original Ant system, each iteration runs m ants through the different paths/graph, and creates a solution. When all the m ants have finished, the update to pheromones happens to the solution the ants have found. Then the algorithm starts the next iteration with the next m ants.
+While the pheromone trail increases the probability that an ant chooses to follow the trail, it does not ensure it.
+If several ants reaches the same food source by walking different paths the shortest path will be made the more attractive
+one over time. This is a result of pheromone deposits. The shortest path will have the highest pheromone density as more
+pheromones can be deposited on the shorter route, the resulting higher pheromone density will increase the possibility that 
+other ants will follow the shorter path. 
 
-MAX-MIN Ant system is an improvement to the original in the way that only the best solution is updated or best so far.
+Over time pheromones evaporates, this prevents the system from ending up with local optimal solutions. 
+If the pheromones did not evaporate the path followed by a certain amount of initial ants
+would quickly become the only path any ant followed as the pheromone density would increase to the point that no other paths
+could ever become more attractive, even if they were the more optimal paths. 
 
-Ant Colony system uses “local pheromones” and “offline pheromones” in finding the best solution to the problem. The local pheromones are used to update each location so that the other ants that follows are less likely to take the same path as him, and thus creating several different solutions in the iteration. When the iteration is done, the offline pheromones are updated to the best solution making it more likely to select this one in the future.
+Additionally, pheromone evaporation makes ACO able to adapt to changes. A path can be the optimal path for a while, until a change
+occurs that makes the path unusable. If the pheromones did not evaporate the ants would continue to follow this path indefinitely,
+never reaching the food source again. However, when the ants are not able to reach the food source they will not deposit any
+pheromones and as the pheromones deposited by previous ants evaporates the ants will will be less attracted to the old path
+and start exploring new ones.
 
-%[1] - Ant Colony Optimization By Marco Dorigo and Thomas Stützle. US 55 Hayward Street, Cambridge, MA 02142-1315 USA. June 2004   http://mitpress.mit.edu/books/ant-colony-optimization
+\begin{figure}[h]
+\centering
+\begin{math}
+P^s_{ab} = {(T^\alpha_{ab})(\Lambda^\beta_{ab}) \over \sum (T^\alpha_{ab})(\Lambda^\beta_{ab})}
+\end{math}
+\caption{\textit{The mathematical formula for edge selection}}
+\label{fig:edge}
+\end{figure}
+
+For the algorithm itself there are two parts, edge selection, as seen in figure \ref{fig:edge}, and pheromone update, as seen in figure \ref{fig:update}. 
+Edge selection, simply stated, is the process of choosing which way to go. Every ant $s$ has a probability $P^s_{ab}$ of moving from location $a$ to location $b$. The probability
+is calculated based on the attractiveness $\Lambda_{ab}$  of moving from $a$ to $b$ and the pheromone trail level $T_{ab}$. The trail level,
+as discussed above, signifies how rewarding that path has been in the past. The attractiveness of a move indicates the cost of the move and 
+will in the beginning of the simmulation have a large impact on the choices made by the ants. However over time the pheromone trail level will take over as the
+dominating factor.
+
+\begin{figure}[h]
+\centering
+\begin{math}
+T_{ab} \leftarrow (1 - \rho)T_{ab} + \sum \limits_{s} \Delta T^s_{ab}
+\end{math}
+\caption{\textit{The mathematical formula for pheromone update}}
+\label{fig:update}
+\end{figure}
+
+When the ants have returned, the pheromone trail is updated. The pheromone trail level $T_{ab}$ is reduced by a pheromone evaporation
+coefficient $\rho$. A higher coefficient results in higher evaporation and fast adaptation and visa versa. Nevertheless this does not mean
+that the factor should always be high as ACO is probabilistic and fast adaptation could result in the optimal path being found and then lost
+again before other ants had time to travel it. Finally, $\sum \limits_{s} \Delta T^s_{ab}$ is the amount of pheromones ant number $s$ will deposit on
+the trail. The amount deposited is typically decided by taking a constant $I$ divided by the length of ant $s$ path $J_s$
+
+\begin{figure}[h]
+\centering
+\begin{math}
+\Delta \tau^{s}_{ab} =
+\begin{cases}
+I/J_s & \mbox{if ant }s\mbox{ uses edge }ab\mbox{ in its path} \\
+0 & \mbox{otherwise}
+\end{cases}
+\end{math}
+\caption{\textit{The mathematical formula used to calculate the amount of pheromones that should be deposited}}
+\label{fig:update}
+\end{figure}
+
+
+
+
+
+
+
+
+
 
